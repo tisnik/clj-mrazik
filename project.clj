@@ -16,7 +16,8 @@
     :license {:name "Eclipse Public License"
               :url "http://www.eclipse.org/legal/epl-v10.html"}
     :dependencies [[org.clojure/clojure "1.7.0"]
-                   [irclj "0.5.0-alpha4"]]
+                   [irclj "0.5.0-alpha4"]
+                   [clojure-ini "0.0.1"]]
     :main ^:skip-aot clj-mrazik.core
     :target-path "target/%s"
     :plugins [[test2junit "1.1.0"]
