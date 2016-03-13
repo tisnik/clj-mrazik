@@ -10,8 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns clj-mrazik.schedule
-  (:gen-class))
+(ns clj-mrazik.schedule)
 
 (require '[clojure.pprint :as pprint])
 (require '[clj-calendar.calendar :as calendar])
