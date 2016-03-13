@@ -17,10 +17,17 @@
 
 (require '[irclj.core :as irc])
 
-(require '[clj-mrazik.config :as config])
+(require '[clj-mrazik.config   :as config])
+(require '[clj-mrazik.schedule :as schedule])
+(require '[clj-mrazik.irc-bot  :as irc-bot])
 
 (defn -main
     "Entry point to this bot."
     [& args]
-    (pprint/pprint (config/load-configuration "config.ini")))
+    (let [config   (config/load-configuration "config.ini")
+          schedule (schedule/compute-schedule (:bot config))]
+         (config/print-configuration config)
+         (pprint/pprint schedule)
+         (irc-bot/start-irc-bot (:server config))
+    ))
 
