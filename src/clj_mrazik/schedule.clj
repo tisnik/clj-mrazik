@@ -15,3 +15,14 @@
 
 (require '[clojure.pprint :as pprint])
 
+(defn compute-schedule
+    [bot-configuration]
+    (let [start     (:start bot-configuration)
+          end       (:end   bot-configuration)
+          frequency (:frequency bot-configuration)
+          duration  (:duration  bot-configuration)]
+          (loop [schedule [] time start]
+              (if (>= time end)
+                  schedule
+                  (recur (conj schedule (schedule-entry time duration)) (+ time frequency))))))
+
