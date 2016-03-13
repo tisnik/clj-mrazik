@@ -12,6 +12,8 @@
 
 (ns clj-mrazik.config)
 
+(require '[clojure.pprint :as pprint])
+
 (require '[clojure-ini.core :as clojure-ini])
 
 (defn parse-int
@@ -29,9 +31,14 @@
     "Load configuration from the provided INI file."
     [ini-file-name]
     (-> (clojure-ini/read-ini ini-file-name :keywordize? true)
-        (update-in [:server :port] parse-int)
+        (update-in [:server :port]   parse-int)
         (update-in [:bot :start]     parse-hh-mm-time-as-minutes)
         (update-in [:bot :end]       parse-hh-mm-time-as-minutes)
         (update-in [:bot :frequency] parse-hh-mm-time-as-minutes)
         (update-in [:bot :duration]  parse-hh-mm-time-as-minutes)))
+
+(defn print-configuration
+    "Print actual configuration to the output."
+    [configuration]
+    (pprint/pprint configuration))
 
