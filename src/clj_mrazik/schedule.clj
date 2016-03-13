@@ -14,6 +14,29 @@
   (:gen-class))
 
 (require '[clojure.pprint :as pprint])
+(require '[clj-calendar.calendar :as calendar])
+
+(defn format-time
+    "Format given date using the following date/time format: 'HH:mm:ss'"
+    [cal]
+    (calendar/format-date-using-desired-format cal "HH:mm:ss"))
+
+(defn format-schedule-time
+    [time]
+    (format-time
+    (doto (calendar/get-calendar)
+          (.set java.util.Calendar/HOUR_OF_DAY 0)
+          (.set java.util.Calendar/SECOND 0)
+          (.set java.util.Calendar/MINUTE time))))
+
+(defn schedule-entry
+    [time duration]
+    (let [to (+ time duration)]
+        {:minutes {:from time
+                   :to   to}
+         :formatted {:from (format-schedule-time time)
+                     :to   (format-schedule-time to)}}
+    ))
 
 (defn compute-schedule
     [bot-configuration]
