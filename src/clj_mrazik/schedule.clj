@@ -48,3 +48,9 @@
                   schedule
                   (recur (conj schedule (schedule-entry time duration)) (+ time frequency))))))
 
+(defn minute-of-day
+    []
+    (let [cal (calendar/get-calendar)]
+        (+ (* 60 (.get cal java.util.Calendar/HOUR_OF_DAY))
+           (.get cal java.util.Calendar/MINUTE))))
+
