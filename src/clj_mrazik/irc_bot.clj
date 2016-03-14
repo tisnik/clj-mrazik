@@ -53,9 +53,15 @@
            host    :host
            command :command} incoming-message]
            (println "Received message from" nick "to" target ":" text "(" host command ")")
+           (println incoming-message)
            (if (message-for-me? @bot-nick incoming-message)
                (irc/reply connection (create-reply incoming-message)
                                      (prepare-reply-text incoming-message nick text)))))
+
+(defn send-message
+    [recipients target message-text]
+    (let [message {:target target :command "PRIVMSG"}]
+        (irc/reply @connection message (str recipients " " message-text))))
 
 (defn start-irc-bot
     [configuration]
