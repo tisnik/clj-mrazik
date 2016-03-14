@@ -37,17 +37,17 @@
 
 (defn open-window
     [config]
-    (let [message    (-> config :bot :message1)
+    (let [message    (-> config :bot    :message1)
           recipients (-> config :server :recipients)
-          channel    (-> config :server channel)]
+          channel    (-> config :server :channel)]
           (println message)
           (irc-bot/send-message recipients channel message)))
 
 (defn close-window
     [config]
-    (let [message    (-> config :bot :message2)
+    (let [message    (-> config :bot    :message2)
           recipients (-> config :server :recipients)
-          channel    (-> config :server channel)]
+          channel    (-> config :server :channel)]
           (println message)
           (irc-bot/send-message recipients channel message)))
 
@@ -64,6 +64,10 @@
                 [:window-open   :should-be-closed] (do (close-window config) (recur :window-closed))
                 [:window-open   :should-be-open]   (recur :window-open))
         )))
+
+; TODO
+; schedule displaying
+; user registration/unregistration
 
 (defn -main
     "Entry point to this bot."
