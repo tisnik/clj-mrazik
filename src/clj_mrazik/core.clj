@@ -23,7 +23,7 @@
 (require '[clj-mrazik.irc-bot  :as irc-bot])
 
 (def sleep-amount
-    10000)
+    50000)
 
 (defn between?
     [schedule-item minutes]
@@ -35,6 +35,8 @@
     (if (some #(between? % minutes) schedule)
         :should-be-open
         :should-be-closed))
+
+; TODO refactor following four functions!
 
 (defn open-window
     [config]
@@ -52,13 +54,44 @@
           (println message)
           (irc-bot/send-message recipients channel message)))
 
+(defn sunrise
+    [config]
+    (let [message    "sunrise!"
+          recipients (-> config :server :recipients)
+          channel    (-> config :server :channel)]
+          (irc-bot/send-message recipients channel message)))
+
+(defn sunset
+    [config]
+    (let [message    "sunset"
+          recipients (-> config :server :recipients)
+          channel    (-> config :server :channel)]
+          (irc-bot/send-message recipients channel message)))
+
+(defn is-sunrise?
+    [geolocation cal minutes]
+    (let [sunrise     (schedule/get-sunrise geolocation cal)
+          sunrise-min (config/parse-hh-mm-time-as-minutes sunrise)]
+          (= sunrise-min minutes)))
+
+(defn is-sunset?
+    [geolocation cal minutes]
+    (let [sunset     (schedule/get-sunset geolocation cal)
+          sunset-min (config/parse-hh-mm-time-as-minutes sunset)]
+          (= sunset-min minutes)))
+
 (defn run-bot
     [config schedule]
     (loop [status :window-closed]
         (Thread/sleep sleep-amount)
-        (let [minutes (calendar/minute-of-day)
-              actual  (in-schedule? schedule minutes)]
-            (println "minutes: " minutes status actual)
+        (let [cal            (calendar/get-calendar)
+              minutes        (calendar/minute-of-day)
+              actual         (in-schedule? schedule minutes)
+              sunrise?       (is-sunrise? (:geolocation config) cal minutes)
+              sunset?        (is-sunset?  (:geolocation config) cal minutes)]
+            (println "minutes: " minutes status actual sunrise? sunset?)
+            (if sunrise? (sunrise config))
+            (if sunset?  (sunset config))
             (condp = [status actual]
                 [:window-closed :should-be-closed] (recur :window-closed)
                 [:window-closed :should-be-open]   (do (open-window config)  (recur :window-open))
@@ -77,10 +110,8 @@
           schedule (schedule/compute-schedule (:bot config))]
          (config/print-configuration config)
          (pprint/pprint schedule)
-         (println (schedule/get-sunrise (:geolocation config)))
-         (println (schedule/get-sunset (:geolocation config)))
-         ;(irc-bot/start-irc-bot (:server config))
-         ;(irc-bot/send-message (-> config :server :recipients) (-> config :server :channel) "Hi!")
-         ;(run-bot config schedule)
+         (irc-bot/start-irc-bot (:server config))
+         (irc-bot/send-message (-> config :server :recipients) (-> config :server :channel) "Hi!")
+         (run-bot config schedule)
     ))
 
