@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #
 #  (C) Copyright 2016  Pavel Tisnovsky
 #
