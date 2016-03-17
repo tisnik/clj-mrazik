@@ -14,15 +14,11 @@
 
 (require '[clojure.pprint :as pprint])
 (require '[clj-calendar.calendar :as calendar])
-
-(defn format-time
-    "Format given date using the following date/time format: 'HH:mm:ss'"
-    [cal]
-    (calendar/format-date-using-desired-format cal "HH:mm:ss"))
+(require '[sunrise.core :as sunrise])
 
 (defn format-schedule-time
     [time]
-    (format-time
+    (calendar/format-time
     (doto (calendar/get-calendar)
           (.set java.util.Calendar/HOUR_OF_DAY 0)
           (.set java.util.Calendar/SECOND 0)
@@ -48,9 +44,29 @@
                   schedule
                   (recur (conj schedule (schedule-entry time duration)) (+ time frequency))))))
 
-(defn minute-of-day
-    []
-    (let [cal (calendar/get-calendar)]
-        (+ (* 60 (.get cal java.util.Calendar/HOUR_OF_DAY))
-           (.get cal java.util.Calendar/MINUTE))))
+(defn get-sunset
+    [geolocation]
+    (let [cal   (calendar/get-calendar)
+          day   (calendar/get-day cal)
+          month (calendar/get-month cal)
+          year  (calendar/get-year cal)]
+        (sunrise/setting-time {:day   day
+                               :month month
+                               :year  year
+                               :latitude  (:latitude  geolocation)
+                               :longitude (:longitude geolocation)
+                               :local-offset 1})))
+
+(defn get-sunrise
+    [geolocation]
+    (let [cal   (calendar/get-calendar)
+          day   (calendar/get-day cal)
+          month (calendar/get-month cal)
+          year  (calendar/get-year cal)]
+        (sunrise/rising-time {:day   day
+                               :month month
+                               :year  year
+                               :latitude  (:latitude  geolocation)
+                               :longitude (:longitude geolocation)
+                               :local-offset 1})))
 

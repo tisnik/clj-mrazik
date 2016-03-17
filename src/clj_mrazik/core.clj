@@ -14,6 +14,7 @@
   (:gen-class))
 
 (require '[clojure.pprint :as pprint])
+(require '[clj-calendar.calendar :as calendar])
 
 (require '[irclj.core :as irc])
 
@@ -55,7 +56,7 @@
     [config schedule]
     (loop [status :window-closed]
         (Thread/sleep sleep-amount)
-        (let [minutes (schedule/minute-of-day)
+        (let [minutes (calendar/minute-of-day)
               actual  (in-schedule? schedule minutes)]
             (println "minutes: " minutes status actual)
             (condp = [status actual]
@@ -76,8 +77,10 @@
           schedule (schedule/compute-schedule (:bot config))]
          (config/print-configuration config)
          (pprint/pprint schedule)
-         (irc-bot/start-irc-bot (:server config))
-         (irc-bot/send-message (-> config :server :recipients) (-> config :server :channel) "Hi!")
-         (run-bot config schedule)
+         (println (schedule/get-sunrise (:geolocation config)))
+         (println (schedule/get-sunset (:geolocation config)))
+         ;(irc-bot/start-irc-bot (:server config))
+         ;(irc-bot/send-message (-> config :server :recipients) (-> config :server :channel) "Hi!")
+         ;(run-bot config schedule)
     ))
 
