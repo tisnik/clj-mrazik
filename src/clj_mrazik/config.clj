@@ -21,6 +21,11 @@
     [string]
     (java.lang.Integer/parseInt string))
 
+(defn parse-float
+    "Parse the given string as a float number."
+    [string]
+    (java.lang.Float/parseFloat string))
+
 (defn parse-hh-mm-time-as-minutes
     "Parse the given string that has to have format 'HH:mm' and returns
      the time in minutes."
@@ -44,12 +49,20 @@
         (update-in [:bot :frequency] parse-hh-mm-time-as-minutes)
         (update-in [:bot :duration]  parse-hh-mm-time-as-minutes)))
 
+(defn update-geolocation-configuration
+    "Update geolocation configuration from the loaded data."
+    [configuration]
+    (-> configuration
+        (update-in [:geolocation :latitude]  parse-float)
+        (update-in [:geolocation :longitude] parse-float)))
+
 (defn load-configuration
     "Load configuration from the provided INI file."
     [ini-file-name]
     (-> (clojure-ini/read-ini ini-file-name :keywordize? true)
         update-server-configuration
-        update-bot-configuration))
+        update-bot-configuration
+        update-geolocation-configuration))
 
 (defn print-configuration
     "Print actual configuration to the output."
