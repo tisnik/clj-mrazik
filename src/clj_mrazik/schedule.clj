@@ -45,28 +45,30 @@
                   (recur (conj schedule (schedule-entry time duration)) (+ time frequency))))))
 
 (defn get-sunset
-    [geolocation]
-    (let [cal   (calendar/get-calendar)
-          day   (calendar/get-day cal)
-          month (calendar/get-month cal)
-          year  (calendar/get-year cal)]
-        (sunrise/setting-time {:day   day
-                               :month month
-                               :year  year
-                               :latitude  (:latitude  geolocation)
-                               :longitude (:longitude geolocation)
-                               :local-offset 1})))
+    ([geolocation]
+     (get-sunset geolocation (calendar/get-calendar)))
+    ([geolocation cal]
+     (let [day   (calendar/get-day cal)
+           month (calendar/get-month cal)
+           year  (calendar/get-year cal)]
+         (sunrise/setting-time {:day   day
+                                :month month
+                                :year  year
+                                :latitude  (:latitude  geolocation)
+                                :longitude (:longitude geolocation)
+                                :local-offset 1}))))
 
 (defn get-sunrise
-    [geolocation]
-    (let [cal   (calendar/get-calendar)
-          day   (calendar/get-day cal)
-          month (calendar/get-month cal)
-          year  (calendar/get-year cal)]
-        (sunrise/rising-time {:day   day
+    ([geolocation]
+     (get-sunrise geolocation (calendar/get-calendar)))
+    ([geolocation cal]
+     (let [day   (calendar/get-day cal)
+           month (calendar/get-month cal)
+           year  (calendar/get-year cal)]
+         (sunrise/rising-time {:day   day
                                :month month
                                :year  year
                                :latitude  (:latitude  geolocation)
                                :longitude (:longitude geolocation)
-                               :local-offset 1})))
+                               :local-offset 1}))))
 
