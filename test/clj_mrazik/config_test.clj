@@ -14,3 +14,21 @@
   (:require [clojure.test :refer :all]
             [clj-mrazik.config :refer :all]))
 
+;
+; Common functions used by tests.
+;
+
+(defn callable?
+    "Test if given function-name is bound to the real function."
+    [function-name]
+    (clojure.test/function? function-name))
+
+;
+; Tests for various functions
+;
+
+(deftest test-parse-int-existence
+    "Check that the clj-mrazik.config/parse-int definition exists."
+    (testing "if the clj-mrazik.config/parse-int definition exists."
+        (is (callable? 'clj-mrazik.config/parse-int))))
+
