@@ -13,12 +13,10 @@
 (ns clj-mrazik.irc-bot)
 
 (require '[irclj.core :as irc])
+(require '[clj-calendar.calendar :as calendar])
 
-(def connection
-    (atom nil))
-
-(def bot-nick
-    (atom nil))
+(require '[clj-mrazik.dyncfg   :as dyncfg])
+(require '[clj-mrazik.schedule :as schedule])
 
 (defn message-to-channel?
     [message]
@@ -36,14 +34,27 @@
         incoming-message
         (assoc incoming-message :target (:nick incoming-message))))
 
+(defn format-schedule
+    [schedule]
+    (apply str (for [s schedule]
+       (str (subs (-> s :formatted :from) 0 5) "-" (subs (-> s :formatted :to) 0 5) ", "))))
+
 (defn prepare-reply-text
     [incomming-message nick input-text]
     (let [in-channel? (message-to-channel? incomming-message)
           input       (if in-channel?
-                          (subs input-text (count @bot-nick))
+                          (subs input-text (+ 2 (count @dyncfg/bot-nick)))
                           input-text)
-          prefix      (if in-channel? (str nick ": "))]
-        (str prefix "?")))
+          prefix      (if in-channel? (str nick ": "))
+          response    (condp = input
+                          "help" "commands: schedule users time sunrise sunset"
+                          "schedule" (format-schedule @dyncfg/schedule)
+                          "users"    (-> @dyncfg/configuration :server :recipients)
+                          "time"     (calendar/format-time (calendar/get-calendar))
+                          "sunrise"  (schedule/get-sunrise (:geolocation @dyncfg/configuration))
+                          "sunset"   (schedule/get-sunset  (:geolocation @dyncfg/configuration))
+                          "?")]
+        (str prefix response)))
 
 (defn on-incoming-message
     [connection incoming-message]
@@ -54,14 +65,14 @@
            command :command} incoming-message]
            (println "Received message from" nick "to" target ":" text "(" host command ")")
            (println incoming-message)
-           (if (message-for-me? @bot-nick incoming-message)
+           (if (message-for-me? @dyncfg/bot-nick incoming-message)
                (irc/reply connection (create-reply incoming-message)
                                      (prepare-reply-text incoming-message nick text)))))
 
 (defn send-message
     [recipients target message-text]
     (let [message {:target target :command "PRIVMSG"}]
-        (irc/reply @connection message (str recipients " " message-text))))
+        (irc/reply @dyncfg/connection message (str recipients " " message-text))))
 
 (defn start-irc-bot
     [configuration]
@@ -73,8 +84,8 @@
         (let [conn (irc/connect server port nick
                                 :callbacks {:privmsg on-incoming-message})]
             (println "Connected, joining to channel" channel)
-            (reset! connection conn)
-            (reset! bot-nick nick)
-            (irc/join @connection channel)
+            (reset! dyncfg/connection conn)
+            (reset! dyncfg/bot-nick nick)
+            (irc/join @dyncfg/connection channel)
             (println "Connected..."))))
 
