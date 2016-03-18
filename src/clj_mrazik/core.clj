@@ -21,9 +21,7 @@
 (require '[clj-mrazik.config   :as config])
 (require '[clj-mrazik.schedule :as schedule])
 (require '[clj-mrazik.irc-bot  :as irc-bot])
-
-(def sleep-amount
-    50000)
+(require '[clj-mrazik.dyncfg   :as dyncfg])
 
 (defn between?
     [schedule-item minutes]
@@ -83,7 +81,7 @@
 (defn run-bot
     [config schedule]
     (loop [status :window-closed]
-        (Thread/sleep sleep-amount)
+        (Thread/sleep dyncfg/sleep-amount)
         (let [cal            (calendar/get-calendar)
               minutes        (calendar/minute-of-day)
               actual         (in-schedule? schedule minutes)
@@ -106,12 +104,14 @@
 (defn -main
     "Entry point to this bot."
     [& args]
-    (let [config   (config/load-configuration "config.ini")
-          schedule (schedule/compute-schedule (:bot config))]
+    (let [config          (config/load-configuration "config.ini")
+          actual-schedule (schedule/compute-schedule (:bot config))]
+         (reset! dyncfg/schedule      actual-schedule)
+         (reset! dyncfg/configuration config)
          (config/print-configuration config)
-         (pprint/pprint schedule)
+         (pprint/pprint @dyncfg/schedule)
          (irc-bot/start-irc-bot (:server config))
          (irc-bot/send-message (-> config :server :recipients) (-> config :server :channel) "Hi!")
-         (run-bot config schedule)
+         (run-bot config @dyncfg/schedule)
     ))
 
