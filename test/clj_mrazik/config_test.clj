@@ -37,3 +37,13 @@
     (testing "if the clj-mrazik.config/parse-float definition exists."
         (is (callable? 'clj-mrazik.config/parse-float))))
 
+(deftest test-load-configuration-existence
+    "Check that the clj-mrazik.config/load-configuration definition exists."
+    (testing "if the clj-mrazik.config/load-configuration definition exists."
+        (is (callable? 'clj-mrazik.config/load-configuration))))
+
+(deftest test-print-configuration-existence
+    "Check that the clj-mrazik.config/print-configuration definition exists."
+    (testing "if the clj-mrazik.config/print-configuration definition exists."
+        (is (callable? 'clj-mrazik.config/print-configuration))))
+
