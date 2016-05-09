@@ -32,3 +32,8 @@
     (testing "if the clj-mrazik.config/parse-int definition exists."
         (is (callable? 'clj-mrazik.config/parse-int))))
 
+(deftest test-parse-float-existence
+    "Check that the clj-mrazik.config/parse-float definition exists."
+    (testing "if the clj-mrazik.config/parse-float definition exists."
+        (is (callable? 'clj-mrazik.config/parse-float))))
+
