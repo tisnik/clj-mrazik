@@ -75,6 +75,12 @@
     [n]
     (reduce *' (range 1 (inc n))))
 
+(defn gcd
+    [x y]
+    (if (zero? y)
+        x
+        (recur y (mod x y))))
+
 (defn print-factorial
     [input]
     (factorial (Integer/parseInt (subs input 0 (dec (count input))))))
@@ -83,9 +89,20 @@
     [input]
     (str input " = " (clojure.string/join " x " (primefactors (Integer/parseInt input)))))
 
+(defn print-gcd
+    [input]
+    (let [splitted (re-find #"([0-9]+)\s+([0-9]+)" input)
+          x (Integer/parseInt (nth splitted 1))
+          y (Integer/parseInt (nth splitted 2))]
+        (str "gcd(" x "," y ") = " (gcd x y))))
+
 (defn is-number?
     [input]
     (re-matches #"[0-9]+" input))
+
+(defn is-two-numbers?
+    [input]
+    (re-matches #"[0-9]+\s+[0-9]+" input))
 
 (defn is-factorial?
     [input]
@@ -109,9 +126,10 @@
                           "Good bot" "I know"
                           "Good bot." "I know"
                           (condp
-                              (is-number? input)    (print-prime-factors input)
-                              (is-factorial? input) (print-factorial input)
-                                                    (random-message)))]
+                              (is-number? input)      (print-prime-factors input)
+                              (is-two-numbers? input) (print-gcd input)
+                              (is-factorial? input)   (print-factorial input)
+                                                      (random-message)))]
         (str prefix response)))
 
 (defn on-incoming-message
