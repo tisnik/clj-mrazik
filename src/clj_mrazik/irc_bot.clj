@@ -53,6 +53,9 @@
                           "time"     (calendar/format-time (calendar/get-calendar))
                           "sunrise"  (schedule/get-sunrise (:geolocation @dyncfg/configuration))
                           "sunset"   (schedule/get-sunset  (:geolocation @dyncfg/configuration))
+                          "die"      "thanks for your feedback, I appreciate it"
+                          "Good bot" "I know"
+                          "Good bot." "I know"
                           "?")]
         (str prefix response)))
 
