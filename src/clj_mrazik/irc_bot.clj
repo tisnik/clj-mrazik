@@ -63,6 +63,18 @@
      " " (rand-nth adjectives)
      " " (rand-nth nouns)))
 
+(defn primefactors 
+    ([n] 
+        (primefactors n 2 '()))
+    ([n candidate accumulator]
+        (cond (<= n 1) (reverse accumulator)
+              (zero? (rem n candidate)) (recur (/ n candidate) candidate (cons candidate accumulator))
+              :else (recur n (inc candidate) accumulator))))
+
+(defn factorial
+    [n]
+    (reduce *' (range 1 (inc n))))
+
 (defn prepare-reply-text
     [incomming-message nick input-text]
     (let [in-channel? (message-to-channel? incomming-message)
@@ -80,7 +92,7 @@
                           "die"      "thanks for your feedback, I appreciate it"
                           "Good bot" "I know"
                           "Good bot." "I know"
-                          (random-message))]
+                                                    (random-message)))]
         (str prefix response)))
 
 (defn on-incoming-message
