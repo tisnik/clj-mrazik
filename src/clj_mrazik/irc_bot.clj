@@ -37,7 +37,8 @@
 (defn format-schedule
     [schedule]
     (apply str (for [s schedule]
-       (str (subs (-> s :formatted :from) 0 5) "-" (subs (-> s :formatted :to) 0 5) ", "))))
+       ;(str (subs (-> s :formatted :from) 0 5) "-" (subs (-> s :formatted :to) 0 5) ", "))))
+       (str (subs (-> s :formatted :from) 0 5) "  "))))
 
 (defn prepare-reply-text
     [incomming-message nick input-text]
