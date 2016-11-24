@@ -15,8 +15,24 @@
 (require '[irclj.core :as irc])
 (require '[clj-calendar.calendar :as calendar])
 
+(require '[clj-mrazik.core     :as core])
 (require '[clj-mrazik.dyncfg   :as dyncfg])
 (require '[clj-mrazik.schedule :as schedule])
+
+(defn load-data-file
+    [filename]
+    (-> filename
+        slurp
+        clojure.string/split-lines))
+
+(defn load-vocabulary
+    [filename]
+    (into [] (load-data-file filename)))
+
+(def verbs      (load-vocabulary "data/verbs.txt"))
+(def adverbs    (load-vocabulary "data/adverbs.txt"))
+(def adjectives (load-vocabulary "data/adjectives.txt"))
+(def nouns      (load-vocabulary "data/nouns.txt"))
 
 (defn message-to-channel?
     [message]
@@ -40,6 +56,13 @@
        ;(str (subs (-> s :formatted :from) 0 5) "-" (subs (-> s :formatted :to) 0 5) ", "))))
        (str (subs (-> s :formatted :from) 0 5) "  "))))
 
+(defn random-message
+    []
+    (str (rand-nth adverbs)
+     " " (rand-nth verbs)
+     " " (rand-nth adjectives)
+     " " (rand-nth nouns)))
+
 (defn prepare-reply-text
     [incomming-message nick input-text]
     (let [in-channel? (message-to-channel? incomming-message)
@@ -57,7 +80,7 @@
                           "die"      "thanks for your feedback, I appreciate it"
                           "Good bot" "I know"
                           "Good bot." "I know"
-                          "?")]
+                          (random-message))]
         (str prefix response)))
 
 (defn on-incoming-message
