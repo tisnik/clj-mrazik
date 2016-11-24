@@ -75,6 +75,22 @@
     [n]
     (reduce *' (range 1 (inc n))))
 
+(defn print-factorial
+    [input]
+    (factorial (Integer/parseInt (subs input 0 (dec (count input))))))
+
+(defn print-prime-factors
+    [input]
+    (str input " = " (clojure.string/join " x " (primefactors (Integer/parseInt input)))))
+
+(defn is-number?
+    [input]
+    (re-matches #"[0-9]+" input))
+
+(defn is-factorial?
+    [input]
+    (re-matches #"[0-9]+!" input))
+
 (defn prepare-reply-text
     [incomming-message nick input-text]
     (let [in-channel? (message-to-channel? incomming-message)
@@ -92,6 +108,9 @@
                           "die"      "thanks for your feedback, I appreciate it"
                           "Good bot" "I know"
                           "Good bot." "I know"
+                          (condp
+                              (is-number? input)    (print-prime-factors input)
+                              (is-factorial? input) (print-factorial input)
                                                     (random-message)))]
         (str prefix response)))
 
