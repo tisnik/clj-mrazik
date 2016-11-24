@@ -125,11 +125,11 @@
                           "die"      "thanks for your feedback, I appreciate it"
                           "Good bot" "I know"
                           "Good bot." "I know"
-                          (condp
+                          (cond
                               (is-number? input)      (print-prime-factors input)
                               (is-two-numbers? input) (print-gcd input)
                               (is-factorial? input)   (print-factorial input)
-                                                      (random-message)))]
+                              :else                   (random-message)))]
         (str prefix response)))
 
 (defn on-incoming-message
