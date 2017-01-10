@@ -119,8 +119,17 @@
     [input]
     (re-matches #"[0-9]+!" input))
 
+(defn is-word-from-dictionary?
+    [input]
+    (seq (dictionary/find-word dictionary/terms input)))
+
+(defn return-words-from-dictionary
+    [input]
+    (dictionary/find-word dictionary/terms input))
+
 (defn prepare-reply-text
     [incomming-message nick input-text]
+    (try
     (let [in-channel? (message-to-channel? incomming-message)
           input       (if in-channel?
                           (subs input-text (+ 2 (count @dyncfg/bot-nick)))
@@ -141,8 +150,14 @@
                               (is-two-numbers? input) (print-gcd input)
                               (is-factorial? input)   (print-factorial input)
                               (is-s-expression? input) (s-expression input)
+                              (is-word-from-dictionary? input) (return-words-from-dictionary input)
                               :else                   (random-message)))]
-        (str prefix response)))
+        {:prefix prefix
+         :response response})
+        (catch Exception e
+            (println (.getMessage e))
+            {:prefix ""
+             :response ""})))
 
 (defn on-incoming-message
     [connection incoming-message]
@@ -154,8 +169,15 @@
            (println "Received message from" nick "to" target ":" text "(" host command ")")
            (println incoming-message)
            (if (message-for-me? @dyncfg/bot-nick incoming-message)
-               (irc/reply connection (create-reply incoming-message)
-                                     (prepare-reply-text incoming-message nick text)))))
+               (let [reply  (create-reply incoming-message)
+                     output (prepare-reply-text incoming-message nick text)]
+                     (if (seq? (:response output))
+                         (doseq [r (:response output)]
+				 (irc/reply connection reply
+					  (str (:prefix output) r)))
+		         (irc/reply connection reply
+				  (str (:prefix output) (:response output))
+))))))
 
 (defn send-message
     [recipients target message-text]
