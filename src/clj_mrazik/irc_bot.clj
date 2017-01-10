@@ -18,6 +18,7 @@
 (require '[clj-mrazik.core     :as core])
 (require '[clj-mrazik.dyncfg   :as dyncfg])
 (require '[clj-mrazik.schedule :as schedule])
+(require '[clj-mrazik.dictionary :as dictionary])
 
 (defn load-data-file
     [filename]
@@ -85,6 +86,16 @@
     [input]
     (factorial (Integer/parseInt (subs input 0 (dec (count input))))))
 
+(defn s-expression
+    [input]
+    (try
+        (eval (read-string input))
+        (catch Exception e "sorry vole, error")))
+
+(defn is-s-expression?
+    [input]
+    (and (.startsWith input "(") (.endsWith input ")")))
+
 (defn print-prime-factors
     [input]
     (str input " = " (clojure.string/join " x " (primefactors (Integer/parseInt input)))))
@@ -129,6 +140,7 @@
                               (is-number? input)      (print-prime-factors input)
                               (is-two-numbers? input) (print-gcd input)
                               (is-factorial? input)   (print-factorial input)
+                              (is-s-expression? input) (s-expression input)
                               :else                   (random-message)))]
         (str prefix response)))
 
