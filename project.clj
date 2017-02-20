@@ -19,7 +19,9 @@
                    [irclj "0.5.0-alpha4"]
                    [clojure-ini "0.0.1"]
                    [sunrise "0.1.0"]
-                   [org.clojars.tisnik/clj-calendar "0.2.0-SNAPSHOT"]]
+                   [org.clojars.tisnik/clj-calendar "0.2.0-SNAPSHOT"]
+                   [org.clojure/java.jdbc "0.3.5"]
+                   [org.xerial/sqlite-jdbc "3.7.2"]]
     :main ^:skip-aot clj-mrazik.core
     :target-path "target/%s"
     :plugins [[test2junit "1.1.0"]
