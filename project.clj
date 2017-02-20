@@ -22,6 +22,7 @@
                    [org.clojars.tisnik/clj-calendar "0.2.0-SNAPSHOT"]
                    [org.clojure/java.jdbc "0.3.5"]
                    [org.xerial/sqlite-jdbc "3.7.2"]
+                   [org.clojure/data.csv  "0.1.2"]
                    [org.clojure/tools.logging "0.3.1"]
                    [log4j/log4j "1.2.17" :exclusions [javax.mail/mail
                                                       javax.jms/jms
