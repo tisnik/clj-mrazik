@@ -18,10 +18,19 @@
 
 (require '[irclj.core :as irc])
 
+(require '[clojure.tools.cli   :as cli])
+
 (require '[clj-mrazik.config   :as config])
 (require '[clj-mrazik.schedule :as schedule])
 (require '[clj-mrazik.irc-bot  :as irc-bot])
 (require '[clj-mrazik.dyncfg   :as dyncfg])
+(require '[clj-mrazik.importer :as importer])
+
+(def cli-options
+    "Definitions of all command line options that are  currenty supported."
+    ;; an option with a required argument
+    [["-h"   "--help"                       "show help"                   :id :help]
+     ["-i"   "--import datafile.csv"        "import data into dictionary" :id :import]])
 
 (defn between?
     [schedule-item minutes]
@@ -97,13 +106,8 @@
                 [:window-open   :should-be-open]   (recur :window-open))
         )))
 
-; TODO
-; schedule displaying
-; user registration/unregistration
-
-(defn -main
-    "Entry point to this bot."
-    [& args]
+(defn start-bot
+    []
     (let [config          (config/load-configuration "config.ini")
           actual-schedule (schedule/compute-schedule (:bot config))]
          (reset! dyncfg/schedule      actual-schedule)
@@ -112,6 +116,26 @@
          (pprint/pprint @dyncfg/schedule)
          (irc-bot/start-irc-bot (:server config))
          (irc-bot/send-message (-> config :server :recipients) (-> config :server :channel) "Hi!")
-         (run-bot config @dyncfg/schedule)
-    ))
+         (run-bot config @dyncfg/schedule)))
+
+; TODO
+; schedule displaying
+; user registration/unregistration
+
+(defn show-help
+    "Show help and all supported CLI flags."
+    [summary]
+    (println "Usage:")
+    (println summary))
+
+(defn -main
+    "Entry point to this bot."
+    [& args]
+    (let [all-options (cli/parse-opts args cli-options)
+          options     (all-options :options)
+          show-help?  (options :help)
+          import?     (options :import)]
+          (cond show-help? (show-help (:summary all-options))
+                import?    (importer/import-data import?)
+                :else      (start-bot))))
 
