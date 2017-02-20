@@ -7,7 +7,7 @@
 ;  http://www.eclipse.org/legal/epl-v10.html
 ;
 ;  Contributors:
-;      Pavel Tisnovsky
+;      Pavel Tisnovsky
 ;
 
 (defproject clj-mrazik "0.1.0-SNAPSHOT"
@@ -26,6 +26,7 @@
     :target-path "target/%s"
     :plugins [[test2junit "1.1.0"]
               [codox "0.8.11"]
+              [test2junit "1.1.0"]
               [lein-cloverage "1.0.6"]]
     :profiles {:uberjar {:aot :all}})
 
