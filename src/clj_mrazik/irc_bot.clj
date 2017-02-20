@@ -98,7 +98,10 @@
 
 (defn print-prime-factors
     [input]
-    (str input " = " (clojure.string/join " x " (primefactors (Integer/parseInt input)))))
+    (let [factors (primefactors (Integer/parseInt input))]
+        (if (<= (count factors) 1)
+            (str input " is a prime number")
+            (str input " = " (clojure.string/join " x " factors)))))
 
 (defn print-gcd
     [input]
