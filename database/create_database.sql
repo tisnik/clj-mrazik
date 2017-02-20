@@ -25,3 +25,16 @@ create table product_names (
     foreign key (class)  references classes(id)
 );
 
+insert into classes (class) values("verb");
+insert into classes (class) values("noun");
+insert into classes (class) values("adverb");
+insert into classes (class) values("adjective");
+insert into classes (class) values("pronoun");
+insert into classes (class) values("conjunction");
+insert into classes (class) values("preposition");
+insert into classes (class) values("interjection");
+insert into classes (class) values("article");
+insert into classes (class) values("numeral");
+insert into classes (class) values("determiner");
+insert into classes (class) values("exclamation");
+
