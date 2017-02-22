@@ -35,15 +35,27 @@
     [term description word-class use-it incorrect-forms correct-forms
      see-also internal verified copyrighted source]
     (jdbc/insert! db-spec/mrazik-db
-        :product_names {:term            term
-                        :description     description
-                        :class           word-class
-                        :use             use-it
-                        :incorrect_forms incorrect-forms
-                        :correct_forms   correct-forms
-                        :see_also        see-also
-                        :internal        internal
-                        :verified        verified
-                        :copyrighted     copyrighted
-                        :source          source}))
+        :dictionary {:term            term
+                     :description     description
+                     :class           word-class
+                     :use             use-it
+                     :incorrect_forms incorrect-forms
+                     :correct_forms   correct-forms
+                     :see_also        see-also
+                     :internal        internal
+                     :verified        verified
+                     :copyrighted     copyrighted
+                     :source          source}))
+
+(defn select-words
+    [word]
+    (jdbc/query db-spec 
+        ["select * from dictionary where term=?" word]))
+
+(defn select-word-count
+    [word]
+    (->
+        (jdbc/query db-spec 
+            ["select count(*) from dictionary where term=?" word]
+            first)))
 

@@ -8,7 +8,7 @@ create table classes (
     class           text not null
 );
 
-create table product_names (
+create table dictionary (
     id              integer primary key asc,
     term            text not null,
     description     text,
