@@ -17,6 +17,12 @@
             (= input "Yes"))
         1 0))
 
+(defn parse-use-it
+    [input]
+    (cond (or (= input "yes") (= input "Yes")) 1
+          (= input "with caution")             2
+          :else 0))
+
 (defn get-word-class
     [input]
     (if input
@@ -46,7 +52,7 @@
                      (nth entry 1) ;term
                      (nth entry 2) ;description
                      word-class      ; word class
-                     (parse-boolean  (nth entry 4)) ; use it
+                     (parse-use-it  (nth entry 4)) ; use it
                      (nth entry 5) ; incorrect forms
                      (nth entry 6) ; correct forms
                      (nth entry 7) ; see also
