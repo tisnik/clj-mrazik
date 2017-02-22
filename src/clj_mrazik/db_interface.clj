@@ -49,13 +49,14 @@
 
 (defn select-words
     [word]
-    (jdbc/query db-spec 
+    (jdbc/query db-spec/mrazik-db
         ["select * from dictionary where term=?" word]))
 
 (defn select-word-count
     [word]
     (->
-        (jdbc/query db-spec 
-            ["select count(*) from dictionary where term=?" word]
-            first)))
+        (jdbc/query db-spec/mrazik-db
+            ["select count(*) as cnt from dictionary where term=?" word])
+        first
+        :cnt))
 
