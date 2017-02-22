@@ -50,7 +50,10 @@
 (defn select-words
     [word]
     (jdbc/query db-spec/mrazik-db
-        ["select * from dictionary where term=?" word]))
+        ["select term, description,
+                 (select class from classes where classes.id=dictionary.class) as class,
+                 use, incorrect_forms, correct_forms, see_also, internal, verified, copyrighted,
+                 (select source from sources where sources.id=dictionary.source) as source from dictionary where term=?" word]))
 
 (defn select-word-count
     [word]
