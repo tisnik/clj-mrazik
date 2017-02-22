@@ -124,11 +124,11 @@
 
 (defn is-word-from-dictionary?
     [input]
-    (seq (dictionary/find-word dictionary/terms input)))
+    (dictionary/word-exist? input))
 
 (defn return-words-from-dictionary
     [input]
-    (dictionary/find-word dictionary/terms input))
+    (dictionary/find-word input))
 
 (defn prepare-reply-text
     [incomming-message nick input-text]
@@ -149,12 +149,12 @@
                           "Good bot" "I know"
                           "Good bot." "I know"
                           (cond
-                              (is-number? input)      (print-prime-factors input)
-                              (is-two-numbers? input) (print-gcd input)
-                              (is-factorial? input)   (print-factorial input)
-                              (is-s-expression? input) (s-expression input)
+                              (is-number? input)               (print-prime-factors input)
+                              (is-two-numbers? input)          (print-gcd input)
+                              (is-factorial? input)            (print-factorial input)
+                              (is-s-expression? input)         (s-expression input)
                               (is-word-from-dictionary? input) (return-words-from-dictionary input)
-                              :else                   (random-message)))]
+                              :else                            (random-message)))]
         {:prefix prefix
          :response response})
         (catch Exception e
