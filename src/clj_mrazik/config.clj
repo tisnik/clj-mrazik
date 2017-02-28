@@ -7,7 +7,7 @@
 ;  http://www.eclipse.org/legal/epl-v10.html
 ;
 ;  Contributors:
-;      Pavel Tisnovsky
+;      Pavel Tisnovsky
 ;
 
 (ns clj-mrazik.config)
@@ -25,6 +25,12 @@
     "Parse the given string as a float number."
     [string]
     (java.lang.Float/parseFloat string))
+
+(defn parse-boolean
+    "Parse the given string as a boolean value."
+    [^String string]
+    (or (= string "true")
+        (= string "True")))
 
 (defn parse-hh-mm-time-as-minutes
     "Parse the given string that has to have format 'HH:mm' and returns
@@ -56,13 +62,18 @@
         (update-in [:geolocation :latitude]  parse-float)
         (update-in [:geolocation :longitude] parse-float)))
 
+(defn update-modules-configuration
+    "Update configuration for all modules (enabled/disabled)."
+    [configuration]
+
 (defn load-configuration
     "Load configuration from the provided INI file."
     [ini-file-name]
     (-> (clojure-ini/read-ini ini-file-name :keywordize? true)
         update-server-configuration
         update-bot-configuration
-        update-geolocation-configuration))
+        update-geolocation-configuration
+        update-modules-configuration))
 
 (defn print-configuration
     "Print actual configuration to the output."
