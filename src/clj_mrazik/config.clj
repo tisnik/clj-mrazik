@@ -65,6 +65,13 @@
 (defn update-modules-configuration
     "Update configuration for all modules (enabled/disabled)."
     [configuration]
+    (-> configuration
+        (update-in [:modules :scheduler]       parse-boolean)
+        (update-in [:modules :sunrise-sunset]  parse-boolean)
+        (update-in [:modules :dictionary]      parse-boolean)
+        (update-in [:modules :random-messages] parse-boolean)
+        (update-in [:modules :s-expressions]   parse-boolean)
+        (update-in [:modules :number-cruncher] parse-boolean)))
 
 (defn load-configuration
     "Load configuration from the provided INI file."
