@@ -145,7 +145,9 @@
           prefix      (if in-channel? (str nick ": "))
           response    (condp = input
                           "help" "commands: schedule users time sunrise sunset"
-                          "schedule" (format-schedule @dyncfg/schedule)
+                          "schedule" (if (:scheduler modules)
+                                         (format-schedule @dyncfg/schedule)
+                                         "scheduler is disabled")
                           "users"    (-> @dyncfg/configuration :server :recipients)
                           "time"     (calendar/format-time (calendar/get-calendar))
                           "sunrise"  (schedule/get-sunrise (:geolocation @dyncfg/configuration))
@@ -160,7 +162,7 @@
                               (and s-expressions?   (is-s-expression? input))         (s-expression input)
                               (and dictionary?      (is-word-from-dictionary? input)) (return-words-from-dictionary input)
                               :else (if random-messages? (random-message)
-                                                         "Command not understood")))]
+                                                         "Command not understood or term not found")))]
         {:prefix prefix
          :response response})
         (catch Exception e
