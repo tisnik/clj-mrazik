@@ -35,7 +35,7 @@
          "use it: " (yes-no w :use) "  "
          "description: " (:description w) "  "
          "source: " (:source w) "  "
-         "preferred forms: " (:incorrect_forms w) "  "
+         "preferred forms: " (:correct_forms w) "  "
          "see also: " (:see_also w)
 ))
 
