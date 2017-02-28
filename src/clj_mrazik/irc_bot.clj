@@ -134,6 +134,8 @@
     [incomming-message nick input-text]
     (try
     (let [in-channel? (message-to-channel? incomming-message)
+          modules     (-> @dyncfg/configuration :modules)
+          number-cruncher? (:number-cruncher modules)
           input       (if in-channel?
                           (subs input-text (+ 2 (count @dyncfg/bot-nick)))
                           input-text)
@@ -149,9 +151,9 @@
                           "Good bot" "I know"
                           "Good bot." "I know"
                           (cond
-                              (is-number? input)               (print-prime-factors input)
-                              (is-two-numbers? input)          (print-gcd input)
-                              (is-factorial? input)            (print-factorial input)
+                              (and number-cruncher? (is-number? input))        (print-prime-factors input)
+                              (and number-cruncher? (is-two-numbers? input))   (print-gcd input)
+                              (and number-cruncher? (is-factorial? input))     (print-factorial input)
                               (is-s-expression? input)         (s-expression input)
                               (is-word-from-dictionary? input) (return-words-from-dictionary input)
                               :else                            (random-message)))]
