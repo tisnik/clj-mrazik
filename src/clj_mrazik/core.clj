@@ -116,7 +116,9 @@
          (pprint/pprint @dyncfg/schedule)
          (irc-bot/start-irc-bot (:server config))
          (irc-bot/send-message (-> config :server :recipients) (-> config :server :channel) "Hi!")
-         (run-bot config @dyncfg/schedule)))
+         (if (or (-> config :module :sunrise-sunset)
+                 (-> config :modules :scheduler))
+             (run-bot config @dyncfg/schedule))))
 
 ; TODO
 ; schedule displaying
