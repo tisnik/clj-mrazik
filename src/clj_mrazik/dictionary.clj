@@ -2,31 +2,55 @@
 
 (require '[clj-mrazik.db-interface :as db-interface])
 
+(defn highlight
+    [string color-code]
+    (str (char 3) color-code string (char 3) "99"))
+
+(defn black
+    [string]
+    (highlight string "01"))
+
+(defn red
+    [string]
+    (highlight string "04"))
+
+(defn green
+    [string]
+    (highlight string "03"))
+
+(defn blue
+    [string]
+    (highlight string "02"))
+
+(defn purple
+    [string]
+    (highlight string "06"))
+
 (defn yes-no
     [w key]
     (condp = (get w key)
-          0 "no"
-          1 "yes"
-          2 "with caution"))
+          0 (red "no")
+          1 (green "yes")
+          2 (purple "with caution")))
 
 (defn incorrect-forms
     [w]
-    (str "class: " (:class w) "  "
-         "use it: " (yes-no w :use) "  "
-         "description: " (:description w) "  "
-         "source: " (:source w) "  "
-         "incorrect forms: " (:incorrect_forms w) "  "
-         "see also: " (:see_also w)
+    (str (black "class:")           (blue (:class w)) " "
+         (black "use it:")          (yes-no w :use) " "
+         (black "description:")     (blue (:description w)) " "
+         (black "source:")          (blue (:source w)) " "
+         (black "incorrect forms:") (blue (:incorrect_forms w)) " "
+         (black "see also:")        (blue (:see_also w))
 ))
 
 (defn correct-forms
     [w]
-    (str "class: " (:class w) "  "
-         "use it: " (yes-no w :use) "  "
-         "description: " (:description w) "  "
-         "source: " (:source w) "  "
-         "correct forms: " (:correct_forms w) "  "
-         "see also: " (:see_also w)
+    (str (black "class:")           (blue (:class w)) " "
+         (black "use it:")          (yes-no w :use) " "
+         (black "description:")     (blue (:description w)) " "
+         (black "source:")          (blue (:source w)) " "
+         (black "correct forms:")   (blue (:correct_forms w)) " "
+         (black "see also:")        (blue (:see_also w))
 ))
 
 (defn preferred-forms
