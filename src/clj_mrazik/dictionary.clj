@@ -46,38 +46,43 @@
           1 (green  "yes")
           2 (yellow "with caution")))
 
+(defn print-field
+    [title word key]
+    (str (bold (str title ": ")) (get word key) " "))
+
+(defn use-it
+    [w]
+    (str (bold "use it: ") (yes-no-with-caution w :use) " "))
+
 (defn incorrect-forms
     [w]
     (str reset
-         (bold "class: ")           (:class w) " "
-         (bold "use it: ")          (yes-no-with-caution w :use) " "
-         (bold "description: ")     (:description w) " "
-         (bold "source: ")          (:source w) " "
-         (bold "incorrect forms: ") (:incorrect_forms w) " "
-         (bold "see also: ")        (:see_also w)
-))
+         (print-field "class"           w :class)
+         (use-it                        w)
+         (print-field "description"     w :description)
+         (print-field "source"          w :source)
+         (print-field "incorrect forms" w :incorrect_forms)
+         (print-field "see also"        w :see_also)))
 
 (defn correct-forms
     [w]
     (str reset
-         (bold "class: ")           (:class w) " "
-         (bold "use it: ")          (yes-no-with-caution w :use) " "
-         (bold "description: ")     (:description w) " "
-         (bold "source: ")          (:source w) " "
-         (bold "correct forms: ")   (:correct_forms w) " "
-         (bold "see also: ")        (:see_also w)
-))
+         (print-field "class"           w :class)
+         (use-it                        w)
+         (print-field "description"     w :description)
+         (print-field "source"          w :source)
+         (print-field "correct forms"   w :correct_forms)
+         (print-field "see also"        w :see_also)))
 
 (defn preferred-forms
     [w]
     (str reset
-         (bold "class: ")           (:class w) " "
-         (bold "use it: ")          (yes-no-with-caution w :use) " "
-         (bold "description: ")     (:description w) " "
-         (bold "source: ")          (:source w) " "
-         (bold "preferred forms: ") (:correct_forms w) " "
-         (bold "see also: ")        (:see_also w)
-))
+         (print-field "class"           w :class)
+         (use-it                        w)
+         (print-field "description"     w :description)
+         (print-field "source"          w :source)
+         (print-field "preferred forms" w :correct_forms)
+         (print-field "see also"        w :see_also)))
 
 (defn find-word
     [word]
