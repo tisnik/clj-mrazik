@@ -156,7 +156,7 @@
                           "Good bot" "I know"
                           "Good bot." "I know"
                           "rainbow"   (apply str (for [color (range 16)]
-                                                     (str (char 3) (format "%02d" color) "test" (char 3) "99")))
+                                                     (str (char 3) (format "%02d" color) (format "test%02d " color) (char 3) "99")))
                           (cond
                               (and number-cruncher? (is-number? input))               (print-prime-factors input)
                               (and number-cruncher? (is-two-numbers? input))          (print-gcd input)
