@@ -2,6 +2,8 @@
 
 (require '[clj-mrazik.db-interface :as db-interface])
 
+; best colors: 10 4 6
+;
 (defn highlight
     [string color-code]
     (str (char 3) color-code string (char 3) "99"))
@@ -26,41 +28,56 @@
     [string]
     (highlight string "06"))
 
-(defn yes-no
+(defn yellow
+    [string]
+    (highlight string "08"))
+
+(defn bold
+    [string]
+    (str (char 2) string (char 15)))
+
+(defn reset
+    []
+    (str (char 15)))
+
+(defn yes-no-with-caution
     [w key]
     (condp = (get w key)
-          0 (red "no")
-          1 (green "yes")
-          2 (purple "with caution")))
+          0 (red    "no")
+          1 (green  "yes")
+          2 (yellow "with caution")))
 
 (defn incorrect-forms
     [w]
-    (str (black "class:")           (blue (:class w)) " "
-         (black "use it:")          (yes-no w :use) " "
-         (black "description:")     (blue (:description w)) " "
-         (black "source:")          (blue (:source w)) " "
-         (black "incorrect forms:") (blue (:incorrect_forms w)) " "
-         (black "see also:")        (blue (:see_also w))
+    (str (reset)
+         (bold "class: ")           (:class w) " "
+         (bold "use it: ")          (yes-no-with-caution w :use) " "
+         (bold "description: ")     (:description w) " "
+         (bold "source: ")          (:source w) " "
+         (bold "incorrect forms: ") (:incorrect_forms w) " "
+         (bold "see also: ")        (:see_also w)
 ))
 
 (defn correct-forms
     [w]
-    (str (black "class:")           (blue (:class w)) " "
-         (black "use it:")          (yes-no w :use) " "
-         (black "description:")     (blue (:description w)) " "
-         (black "source:")          (blue (:source w)) " "
-         (black "correct forms:")   (blue (:correct_forms w)) " "
-         (black "see also:")        (blue (:see_also w))
+    (str (reset)
+         (bold "class: ")           (:class w) " "
+         (bold "use it: ")          (yes-no-with-caution w :use) " "
+         (bold "description: ")     (:description w) " "
+         (bold "source: ")          (:source w) " "
+         (bold "correct forms: ")   (:correct_forms w) " "
+         (bold "see also: ")        (:see_also w)
 ))
 
 (defn preferred-forms
     [w]
-    (str "class: " (:class w) "  "
-         "use it: " (yes-no w :use) "  "
-         "description: " (:description w) "  "
-         "source: " (:source w) "  "
-         "preferred forms: " (:correct_forms w) "  "
-         "see also: " (:see_also w)
+    (str (reset)
+         (bold "class: ")           (:class w) " "
+         (bold "use it: ")          (yes-no-with-caution w :use) " "
+         (bold "description: ")     (:description w) " "
+         (bold "source: ")          (:source w) " "
+         (bold "preferred forms: ") (:correct_forms w) " "
+         (bold "see also: ")        (:see_also w)
 ))
 
 (defn find-word
