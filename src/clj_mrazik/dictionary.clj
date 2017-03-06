@@ -36,8 +36,7 @@
     [string]
     (str (char 2) string (char 15)))
 
-(defn reset
-    []
+(def reset
     (str (char 15)))
 
 (defn yes-no-with-caution
@@ -49,7 +48,7 @@
 
 (defn incorrect-forms
     [w]
-    (str (reset)
+    (str reset
          (bold "class: ")           (:class w) " "
          (bold "use it: ")          (yes-no-with-caution w :use) " "
          (bold "description: ")     (:description w) " "
@@ -60,7 +59,7 @@
 
 (defn correct-forms
     [w]
-    (str (reset)
+    (str reset
          (bold "class: ")           (:class w) " "
          (bold "use it: ")          (yes-no-with-caution w :use) " "
          (bold "description: ")     (:description w) " "
@@ -71,7 +70,7 @@
 
 (defn preferred-forms
     [w]
-    (str (reset)
+    (str reset
          (bold "class: ")           (:class w) " "
          (bold "use it: ")          (yes-no-with-caution w :use) " "
          (bold "description: ")     (:description w) " "
