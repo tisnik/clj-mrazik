@@ -23,3 +23,146 @@
     [function-name]
     (clojure.test/function? function-name))
 
+(deftest test-load-data-file-existence
+    "Check that the clj-mrazik.irc-bot/load-data-file definition exists."
+    (testing "if the clj-mrazik.irc-bot/load-data-file definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/load-data-file))))
+
+
+(deftest test-load-vocabulary-existence
+    "Check that the clj-mrazik.irc-bot/load-vocabulary definition exists."
+    (testing "if the clj-mrazik.irc-bot/load-vocabulary definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/load-vocabulary))))
+
+
+(deftest test-message-to-channel?-existence
+    "Check that the clj-mrazik.irc-bot/message-to-channel? definition exists."
+    (testing "if the clj-mrazik.irc-bot/message-to-channel? definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/message-to-channel?))))
+
+
+(deftest test-message-for-me?-existence
+    "Check that the clj-mrazik.irc-bot/message-for-me? definition exists."
+    (testing "if the clj-mrazik.irc-bot/message-for-me? definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/message-for-me?))))
+
+
+(deftest test-create-reply-existence
+    "Check that the clj-mrazik.irc-bot/create-reply definition exists."
+    (testing "if the clj-mrazik.irc-bot/create-reply definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/create-reply))))
+
+
+(deftest test-format-schedule-existence
+    "Check that the clj-mrazik.irc-bot/format-schedule definition exists."
+    (testing "if the clj-mrazik.irc-bot/format-schedule definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/format-schedule))))
+
+
+(deftest test-random-message-existence
+    "Check that the clj-mrazik.irc-bot/random-message definition exists."
+    (testing "if the clj-mrazik.irc-bot/random-message definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/random-message))))
+
+
+(deftest test-primefactors-existence
+    "Check that the clj-mrazik.irc-bot/primefactors definition exists."
+    (testing "if the clj-mrazik.irc-bot/primefactors definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/primefactors))))
+
+
+(deftest test-factorial-existence
+    "Check that the clj-mrazik.irc-bot/factorial definition exists."
+    (testing "if the clj-mrazik.irc-bot/factorial definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/factorial))))
+
+
+(deftest test-gcd-existence
+    "Check that the clj-mrazik.irc-bot/gcd definition exists."
+    (testing "if the clj-mrazik.irc-bot/gcd definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/gcd))))
+
+
+(deftest test-print-factorial-existence
+    "Check that the clj-mrazik.irc-bot/print-factorial definition exists."
+    (testing "if the clj-mrazik.irc-bot/print-factorial definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/print-factorial))))
+
+
+(deftest test-s-expression-existence
+    "Check that the clj-mrazik.irc-bot/s-expression definition exists."
+    (testing "if the clj-mrazik.irc-bot/s-expression definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/s-expression))))
+
+
+(deftest test-is-s-expression?-existence
+    "Check that the clj-mrazik.irc-bot/is-s-expression? definition exists."
+    (testing "if the clj-mrazik.irc-bot/is-s-expression? definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/is-s-expression?))))
+
+
+(deftest test-print-prime-factors-existence
+    "Check that the clj-mrazik.irc-bot/print-prime-factors definition exists."
+    (testing "if the clj-mrazik.irc-bot/print-prime-factors definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/print-prime-factors))))
+
+
+(deftest test-print-gcd-existence
+    "Check that the clj-mrazik.irc-bot/print-gcd definition exists."
+    (testing "if the clj-mrazik.irc-bot/print-gcd definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/print-gcd))))
+
+
+(deftest test-is-number?-existence
+    "Check that the clj-mrazik.irc-bot/is-number? definition exists."
+    (testing "if the clj-mrazik.irc-bot/is-number? definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/is-number?))))
+
+
+(deftest test-is-two-numbers?-existence
+    "Check that the clj-mrazik.irc-bot/is-two-numbers? definition exists."
+    (testing "if the clj-mrazik.irc-bot/is-two-numbers? definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/is-two-numbers?))))
+
+
+(deftest test-is-factorial?-existence
+    "Check that the clj-mrazik.irc-bot/is-factorial? definition exists."
+    (testing "if the clj-mrazik.irc-bot/is-factorial? definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/is-factorial?))))
+
+
+(deftest test-is-word-from-dictionary?-existence
+    "Check that the clj-mrazik.irc-bot/is-word-from-dictionary? definition exists."
+    (testing "if the clj-mrazik.irc-bot/is-word-from-dictionary? definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/is-word-from-dictionary?))))
+
+
+(deftest test-return-words-from-dictionary-existence
+    "Check that the clj-mrazik.irc-bot/return-words-from-dictionary definition exists."
+    (testing "if the clj-mrazik.irc-bot/return-words-from-dictionary definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/return-words-from-dictionary))))
+
+
+(deftest test-prepare-reply-text-existence
+    "Check that the clj-mrazik.irc-bot/prepare-reply-text definition exists."
+    (testing "if the clj-mrazik.irc-bot/prepare-reply-text definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/prepare-reply-text))))
+
+
+(deftest test-on-incoming-message-existence
+    "Check that the clj-mrazik.irc-bot/on-incoming-message definition exists."
+    (testing "if the clj-mrazik.irc-bot/on-incoming-message definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/on-incoming-message))))
+
+
+(deftest test-send-message-existence
+    "Check that the clj-mrazik.irc-bot/send-message definition exists."
+    (testing "if the clj-mrazik.irc-bot/send-message definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/send-message))))
+
+
+(deftest test-start-irc-bot-existence
+    "Check that the clj-mrazik.irc-bot/start-irc-bot definition exists."
+    (testing "if the clj-mrazik.irc-bot/start-irc-bot definition exists."
+        (is (callable? 'clj-mrazik.irc-bot/start-irc-bot))))
+
