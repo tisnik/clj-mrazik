@@ -130,6 +130,10 @@
     [input]
     (dictionary/find-word input))
 
+(defn dictionary-status
+    []
+    (str "Number of terms in dictionary: " (dictionary/term-count)))
+
 (defn prepare-reply-text
     [incomming-message nick input-text]
     (try
@@ -145,6 +149,7 @@
           prefix      (if in-channel? (str nick ": "))
           response    (condp = input
                           "help" "commands: schedule users time sunrise sunset"
+                          "status"   (dictionary-status)
                           "schedule" (if (:scheduler modules)
                                          (format-schedule @dyncfg/schedule)
                                          "scheduler is disabled")

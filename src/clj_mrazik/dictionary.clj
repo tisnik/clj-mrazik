@@ -94,6 +94,10 @@
                 1 (incorrect-forms w)
                 2 (preferred-forms w)))))
 
+(defn term-count
+    []
+    (db-interface/all-words-count))
+
 (defn word-exist?
     [word]
     (> (db-interface/select-word-count word)
