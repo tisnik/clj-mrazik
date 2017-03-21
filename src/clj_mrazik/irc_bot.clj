@@ -43,6 +43,8 @@
     [my-name message]
     (or (.startsWith (:target message) my-name)        ; private message
         (.startsWith (:text message) (str my-name ":")); direct message
+        (.startsWith (:text message) (str my-name ",")); direct message
+        (.startsWith (:text message) "!")              ; special prefix
     ))
 
 (defn create-reply
@@ -144,7 +146,9 @@
           dictionary?      (:dictionary modules)
           random-messages? (:random-messages modules)
           input       (if in-channel?
-                          (subs input-text (+ 2 (count @dyncfg/bot-nick)))
+                          (if (.startsWith input-text "!")
+                              (subs input-text 1)
+                              (subs input-text (+ 2 (count @dyncfg/bot-nick))))
                           input-text)
           prefix      (if in-channel? (str nick ": "))
           response    (condp = input
