@@ -40,11 +40,11 @@
     (.startsWith (:target message) "#"))
 
 (defn message-for-me?
-    [my-name message]
+    [my-name special-prefix message]
     (or (.startsWith (:target message) my-name)        ; private message
         (.startsWith (:text message) (str my-name ":")); direct message
         (.startsWith (:text message) (str my-name ",")); direct message
-        (.startsWith (:text message) "!")              ; special prefix
+        (.startsWith (:text message) special-prefix)   ; special prefix
     ))
 
 (defn create-reply
@@ -146,13 +146,13 @@
           dictionary?      (:dictionary modules)
           random-messages? (:random-messages modules)
           input       (if in-channel?
-                          (if (.startsWith input-text "!")
+                          (if (.startsWith input-text (-> @dyncfg/configuration :bot :prefix))
                               (subs input-text 1)
                               (subs input-text (+ 2 (count @dyncfg/bot-nick))))
                           input-text)
           prefix      (if in-channel? (str nick ": "))
           response    (condp = input
-                          "help" (-> @dyncfg/configuration :bot :help)
+                          "help"     (-> @dyncfg/configuration :bot :help)
                           "status"   (dictionary-status)
                           "schedule" (if (:scheduler modules)
                                          (format-schedule @dyncfg/schedule)
@@ -190,7 +190,7 @@
            command :command} incoming-message]
            (println "Received message from" nick "to" target ":" text "(" host command ")")
            (println incoming-message)
-           (if (message-for-me? @dyncfg/bot-nick incoming-message)
+           (if (message-for-me? @dyncfg/bot-nick (-> @dyncfg/configuration :bot :prefix) incoming-message)
                (let [reply  (create-reply incoming-message)
                      output (prepare-reply-text incoming-message nick text)]
                      (if (seq? (:response output))
