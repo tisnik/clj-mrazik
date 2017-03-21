@@ -63,3 +63,11 @@
         first
         :cnt))
 
+(defn all-words-count
+    []
+    (->
+        (jdbc/query db-spec/mrazik-db
+            ["select count(*) as cnt from dictionary"])
+        first
+        :cnt))
+
