@@ -148,7 +148,7 @@
                           input-text)
           prefix      (if in-channel? (str nick ": "))
           response    (condp = input
-                          "help" "commands: schedule users time sunrise sunset"
+                          "help" (-> @dyncfg/configuration :bot :help)
                           "status"   (dictionary-status)
                           "schedule" (if (:scheduler modules)
                                          (format-schedule @dyncfg/schedule)
