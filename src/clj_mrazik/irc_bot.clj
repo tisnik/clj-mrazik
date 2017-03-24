@@ -208,16 +208,19 @@
 
 (defn start-irc-bot
     [configuration]
-    (let [server  (:name configuration)
-          port    (:port configuration)
-          channel (:channel configuration)
-          nick    (:nick configuration)]
+    (let [server   (:name configuration)
+          port     (:port configuration)
+          channels (:channels configuration)
+          chanlist (clojure.string/split channels #" ")
+          nick     (:nick configuration)]
         (println "Connecting to" server "on port" port)
         (let [conn (irc/connect server port nick
                                 :callbacks {:privmsg on-incoming-message})]
-            (println "Connected, joining to channel" channel)
+            (println "Connected, joining to channels" channels)
             (reset! dyncfg/connection conn)
             (reset! dyncfg/bot-nick nick)
-            (irc/join @dyncfg/connection channel)
+            (doseq [channel chanlist]
+                (println channel)
+                (irc/join @dyncfg/connection (clojure.string/trim channel)))
             (println "Connected..."))))
 
