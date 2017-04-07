@@ -8,6 +8,11 @@ create table classes (
     class           text not null
 );
 
+create table products (
+    id              integer primary key asc,
+    product         text not null
+);
+
 create table dictionary (
     id              integer primary key asc,
     term            text not null,
@@ -21,8 +26,10 @@ create table dictionary (
     verified        integer,
     copyrighted     integer,
     source          integer,
-    foreign key (source) references sources(id)
-    foreign key (class)  references classes(id)
+    product         integer,
+    foreign key (source)  references sources(id)
+    foreign key (class)   references classes(id)
+    foreign key (product) references products(id)
 );
 
 insert into classes (class) values("verb");
