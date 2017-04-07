@@ -53,7 +53,9 @@
         ["select term, description,
                  (select class from classes where classes.id=dictionary.class) as class,
                  use, incorrect_forms, correct_forms, see_also, internal, verified, copyrighted,
-                 (select source from sources where sources.id=dictionary.source) as source from dictionary where term=?" word]))
+                 (select source from sources where sources.id=dictionary.source) as source,
+                 (select product from products where products.id=dictionary.product) as product
+                 from dictionary where term=?" word]))
 
 (defn select-word-count
     [word]

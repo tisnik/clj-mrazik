@@ -62,7 +62,8 @@
          (print-field "description"     w :description)
          (print-field "source"          w :source)
          (print-field "incorrect forms" w :incorrect_forms)
-         (print-field "see also"        w :see_also)))
+         (print-field "see also"        w :see_also)
+         (print-field "product"         w :product)))
 
 (defn correct-forms
     [w]
@@ -72,7 +73,8 @@
          (print-field "description"     w :description)
          (print-field "source"          w :source)
          (print-field "correct forms"   w :correct_forms)
-         (print-field "see also"        w :see_also)))
+         (print-field "see also"        w :see_also)
+         (print-field "product"         w :product)))
 
 (defn preferred-forms
     [w]
@@ -82,7 +84,8 @@
          (print-field "description"     w :description)
          (print-field "source"          w :source)
          (print-field "preferred forms" w :correct_forms)
-         (print-field "see also"        w :see_also)))
+         (print-field "see also"        w :see_also)
+         (print-field "product"         w :product)))
 
 (defn find-word
     [word]
