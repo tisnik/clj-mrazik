@@ -44,7 +44,8 @@
     (or (.startsWith (:target message) my-name)        ; private message
         (.startsWith (:text message) (str my-name ":")); direct message
         (.startsWith (:text message) (str my-name ",")); direct message
-        (.startsWith (:text message) special-prefix)   ; special prefix
+        (and (.startsWith (:text message) special-prefix)   ; special prefix
+             (not (= (.trim (:text message)) special-prefix)))
     ))
 
 (defn create-reply
