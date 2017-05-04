@@ -47,21 +47,33 @@
                      :copyrighted     copyrighted
                      :source          source}))
 
+(defn update-word
+    [word use-like]
+    (if use-like
+        (-> word .toLowerCase (.replaceAll "\\*" "%"))
+        (-> word .toLowerCase)))
+
+(defn add-where-clause
+    [word use-like]
+    (if use-like
+        "where lower(term) like ?"
+        "where lower(term)=?"))
+
 (defn select-words
-    [word]
+    [word use-like]
     (jdbc/query db-spec/mrazik-db
-        ["select term, description,
+        [("select term, description,
                  (select class from classes where classes.id=dictionary.class) as class,
                  use, incorrect_forms, correct_forms, see_also, internal, verified, copyrighted,
                  (select source from sources where sources.id=dictionary.source) as source,
                  (select product from products where products.id=dictionary.product) as product
-                 from dictionary where lower(term)=?" (.toLowerCase word)]))
+                 from dictionary " (add-where-clause word use-like)) (update-word word use-like)]))
 
 (defn select-word-count
-    [word]
+    [word use-like]
     (->
         (jdbc/query db-spec/mrazik-db
-            ["select count(*) as cnt from dictionary where lower(term)=?" (.toLowerCase word)])
+            [(str "select count(*) as cnt from dictionary " (add-where-clause word use-like)) (update-word word use-like)])
         first
         :cnt))
 
