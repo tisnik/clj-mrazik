@@ -55,13 +55,13 @@
                  use, incorrect_forms, correct_forms, see_also, internal, verified, copyrighted,
                  (select source from sources where sources.id=dictionary.source) as source,
                  (select product from products where products.id=dictionary.product) as product
-                 from dictionary where term=?" word]))
+                 from dictionary where lower(term)=?" (.toLowerCase word)]))
 
 (defn select-word-count
     [word]
     (->
         (jdbc/query db-spec/mrazik-db
-            ["select count(*) as cnt from dictionary where term=?" word])
+            ["select count(*) as cnt from dictionary where lower(term)=?" (.toLowerCase word)])
         first
         :cnt))
 
