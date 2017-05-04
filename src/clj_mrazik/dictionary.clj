@@ -89,13 +89,29 @@
 
 (defn find-word
     [word]
-    (let [words (db-interface/select-words word)]
+    (let [words (db-interface/select-words word false)]
         (clojure.pprint/pprint words)
         (for [w words]
             (condp = (:use w)
-                0 (correct-forms w) 
+                0 (correct-forms w)
                 1 (incorrect-forms w)
                 2 (preferred-forms w)))))
+
+(defn find-word-like-this
+    [word]
+    (let [words (db-interface/select-words word true)]
+        (clojure.pprint/pprint words)
+        (for [w words]
+            (condp = (:use w)
+                0 (correct-forms w)
+                1 (incorrect-forms w)
+                2 (preferred-forms w)))))
+
+(defn find-words-like-this
+    [word]
+    (let [words (db-interface/select-words word true)]
+        (str "Found " (count words) " entries: "
+             (clojure.string/join ", " (map #(:term %) words)))))
 
 (defn term-count
     []
@@ -103,6 +119,10 @@
 
 (defn word-exist?
     [word]
-    (> (db-interface/select-word-count word)
+    (> (db-interface/select-word-count word false)
        0))
+
+(defn words-like-this
+    [word]
+    (db-interface/select-word-count word true))
 
