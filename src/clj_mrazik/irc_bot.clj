@@ -1,5 +1,5 @@
 ;
-;  (C) Copyright 2016  Pavel Tisnovsky
+;  (C) Copyright 2017  Pavel Tisnovsky
 ;
 ;  All rights reserved. This program and the accompanying materials
 ;  are made available under the terms of the Eclipse Public License v1.0
@@ -133,6 +133,29 @@
     [input]
     (dictionary/find-word input))
 
+(defn use-wildchards?
+    [input]
+    (or (.startsWith input "*")
+        (.endsWith input "*")))
+
+(defn one-word-like-this?
+    [input]
+    (if (use-wildchards? input)
+        (= (dictionary/words-like-this input) 1)))
+
+(defn more-words-like-this?
+    [input]
+    (if (use-wildchards? input)
+        (> (dictionary/words-like-this input) 1)))
+
+(defn return-word-like-this
+    [input]
+    (dictionary/find-word-like-this input))
+
+(defn return-more-words-like-this
+    [input]
+    (dictionary/find-words-like-this input))
+
 (defn dictionary-status
     []
     (str "Number of terms in dictionary: " (dictionary/term-count)))
@@ -172,7 +195,9 @@
                               (and number-cruncher? (is-two-numbers? input))          (print-gcd input)
                               (and number-cruncher? (is-factorial? input))            (print-factorial input)
                               (and s-expressions?   (is-s-expression? input))         (s-expression input)
-                              (and dictionary?      (is-word-from-dictionary? input)) (return-words-from-dictionary input)
+                              (is-word-from-dictionary? input) (return-words-from-dictionary input)
+                              (one-word-like-this? input)      (return-word-like-this input)
+                              (more-words-like-this? input)    (return-more-words-like-this input)
                               :else (if random-messages? (random-message)
                                                          "Command not understood or term not found")))]
         {:prefix prefix
