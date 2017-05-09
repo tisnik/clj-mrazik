@@ -23,3 +23,36 @@
     [function-name]
     (clojure.test/function? function-name))
 
+;
+; Tests for various functions
+;
+
+(deftest test-format-schedule-time-existence
+    "Check that the clj-mrazik.schedule/format-schedule-time definition exists."
+    (testing "if the clj-mrazik.schedule/format-schedule-time definition exists."
+        (is (callable? 'clj-mrazik.schedule/format-schedule-time))))
+
+
+(deftest test-schedule-entry-existence
+    "Check that the clj-mrazik.schedule/schedule-entry definition exists."
+    (testing "if the clj-mrazik.schedule/schedule-entry definition exists."
+        (is (callable? 'clj-mrazik.schedule/schedule-entry))))
+
+
+(deftest test-compute-schedule-existence
+    "Check that the clj-mrazik.schedule/compute-schedule definition exists."
+    (testing "if the clj-mrazik.schedule/compute-schedule definition exists."
+        (is (callable? 'clj-mrazik.schedule/compute-schedule))))
+
+
+(deftest test-get-sunset-existence
+    "Check that the clj-mrazik.schedule/get-sunset definition exists."
+    (testing "if the clj-mrazik.schedule/get-sunset definition exists."
+        (is (callable? 'clj-mrazik.schedule/get-sunset))))
+
+
+(deftest test-get-sunrise-existence
+    "Check that the clj-mrazik.schedule/get-sunrise definition exists."
+    (testing "if the clj-mrazik.schedule/get-sunrise definition exists."
+        (is (callable? 'clj-mrazik.schedule/get-sunrise))))
+
