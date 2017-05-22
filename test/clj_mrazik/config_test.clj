@@ -12,7 +12,8 @@
 
 (ns clj-mrazik.config-test
   (:require [clojure.test :refer :all]
-            [clj-mrazik.config :refer :all]))
+            [clj-mrazik.config :refer :all]
+            [clojure.pprint :as pprint]))
 
 ;
 ; Common functions used by tests.
