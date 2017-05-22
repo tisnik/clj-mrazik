@@ -202,4 +202,38 @@
         (parse-float "xyzzy")
         (parse-float "-1xyzzy")))
 
+(deftest test-print-configuration
+    "Check the behaviour of function clj-mrazik.config/print-configuration."
+        ; use mock instead of clojure.pprint/pprint
+        (with-redefs [pprint/pprint (fn [configuration] (str configuration))]
+            (is (not (nil? (print-configuration {:first 1 :second 2}))))
+            (is (= (type (print-configuration   {:first 1 :second 2})) java.lang.String))))
+
+(deftest test-load-configuration-1
+    "Check the behaviour of function clj-mrazik.config/load-configuration."
+    (let [cfg (load-configuration "test/test1.ini")]
+        (is (not (nil? cfg)))))
+
+(deftest test-load-configuration-2
+    "Check the behaviour of function clj-mrazik.config/load-configuration."
+    (let [cfg (load-configuration "test/test1.ini")]
+        (is (not (nil? (:server cfg))))
+        (is (not (nil? (:bot cfg))))
+        (is (nil? (:other cfg)))))
+
+(deftest test-load-configuration-3
+    "Check the behaviour of function clj-mrazik.config/load-configuration."
+    (let [cfg (load-configuration "test/test1.ini")]
+        (are [x y] (= x y)
+            (-> cfg :server :name)     "test.com"
+            (-> cfg :server :port)     6667
+            (-> cfg :server :channels) "#botwar"
+            (-> cfg :server :nick)     "clj-mrazik"
+            (-> cfg :server :other)    nil)))
+
+(deftest test-load-configuration-4
+    "Check the behaviour of function clj-mrazik.config/load-configuration."
+    (let [cfg (load-configuration "test/test1.ini")]
+        (are [x y] (= x y)
+            (-> cfg :bot :prefix)     "?")))
 
