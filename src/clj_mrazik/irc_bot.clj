@@ -15,7 +15,6 @@
 (require '[irclj.core :as irc])
 (require '[clj-calendar.calendar :as calendar])
 
-(require '[clj-mrazik.core     :as core])
 (require '[clj-mrazik.dyncfg   :as dyncfg])
 (require '[clj-mrazik.schedule :as schedule])
 (require '[clj-mrazik.dictionary :as dictionary])
