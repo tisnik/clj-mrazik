@@ -58,3 +58,21 @@
     (testing "if the clj-mrazik.importer/import-data definition exists."
         (is (callable? 'clj-mrazik.importer/import-data))))
 
+
+(deftest test-parse-boolean
+    "Check the function parse-boolean."
+    (testing "parse-boolean"
+        (is (= 1 (parse-boolean "yes")))
+        (is (= 1 (parse-boolean "Yes")))
+        (is (= 0 (parse-boolean "no")))
+        (is (= 0 (parse-boolean "No")))))
+
+(deftest test-use-it
+    "Check the function use-it"
+    (testing "use-it"
+        (is (= 1 (parse-use-it "yes")))
+        (is (= 1 (parse-use-it "Yes")))
+        (is (= 0 (parse-use-it "no")))
+        (is (= 0 (parse-use-it "No")))
+        (is (= 2 (parse-use-it "with caution")))))
+
