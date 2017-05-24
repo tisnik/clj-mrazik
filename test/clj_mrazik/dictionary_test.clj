@@ -119,3 +119,9 @@
     (testing "if the clj-mrazik.dictionary/word-exist? definition exists."
         (is (callable? 'clj-mrazik.dictionary/word-exist?))))
 
+(deftest test-highlight
+    "Checks the function highlight."
+    (testing "the function highlight."
+        (is (= java.lang.String (type (highlight "string" "code"))))
+        (is (= (char 3) (.charAt (highlight "string" "code") 0)))))
+
