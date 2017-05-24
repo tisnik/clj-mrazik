@@ -178,10 +178,18 @@
     (testing "the function yes-no-with-caution"
         (is (= (yes-no-with-caution {:no 0 :yes 1 :with-caution 2} :no)           (red "no")))
         (is (= (yes-no-with-caution {:no 0 :yes 1 :with-caution 2} :yes)          (green "yes")))
-        (is (= (yes-no-with-caution {:no 0 :yes 1 :with-caution 2} :with-caution) (yellow "with caution")))))
+        (is (= (yes-no-with-caution {:no 0 :yes 1 :with-caution 2} :with-caution) (yellow "with caution")))
+        (is (= (yes-no-with-caution {} :anything)                                 (red "error - word usage is not set!")))))
 
 (deftest test-print-field
     "Checks the function print-field"
     (testing "the function print-field"
         (is (= (str (bold "title: ") " test ")) (print-field "title" {:term "term"} :term))))
+
+(deftest test-use-it
+    "Checks the function use-it"
+    (testing "the function use-it"
+        (is (= java.lang.String (type (use-it {:term "term" :use 0}))))
+        (is (= java.lang.String (type (use-it {:term "term" :use 1}))))
+        (is (= java.lang.String (type (use-it {:term "term" :use 2}))))))
 
