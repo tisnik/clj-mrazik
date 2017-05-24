@@ -125,3 +125,51 @@
         (is (= java.lang.String (type (highlight "string" "code"))))
         (is (= (char 3) (.charAt (highlight "string" "code") 0)))))
 
+(deftest test-black
+    "Checks the function black."
+    (testing "the function black."
+        (is (= java.lang.String (type (black "string"))))
+        (is (= (subs (black "string") 3 9) "string"))
+        (is (= (subs (black "string") 1 3) "01"))))
+
+(deftest test-red
+    "Checks the function red."
+    (testing "the function red."
+        (is (= java.lang.String (type (red "string"))))
+        (is (= (subs (red "string") 3 9) "string"))
+        (is (= (subs (red "string") 1 3) "04"))))
+
+(deftest test-green
+    "Checks the function green."
+    (testing "the function green."
+        (is (= java.lang.String (type (green "string"))))
+        (is (= (subs (green "string") 3 9) "string"))
+        (is (= (subs (green "string") 1 3) "03"))))
+
+(deftest test-blue
+    "Checks the function blue."
+    (testing "the function blue."
+        (is (= java.lang.String (type (blue "string"))))
+        (is (= (subs (blue "string") 3 9) "string"))
+        (is (= (subs (blue "string") 1 3) "02"))))
+
+(deftest test-purple
+    "Checks the function purple."
+    (testing "the function purple."
+        (is (= java.lang.String (type (purple "string"))))
+        (is (= (subs (purple "string") 3 9) "string"))
+        (is (= (subs (purple "string") 1 3) "06"))))
+
+(deftest test-yellow
+    "Checks the function yellow."
+    (testing "the function yellow."
+        (is (= java.lang.String (type (yellow "string"))))
+        (is (= (subs (yellow "string") 3 9) "string"))
+        (is (= (subs (yellow "string") 1 3) "08"))))
+
+(deftest test-bold
+    "Checks the function bold."
+    (testing "the function bold."
+        (is (= java.lang.String (type (bold "string"))))
+        (is (= (subs (bold "string") 1 7) "string"))))
+
