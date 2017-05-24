@@ -44,7 +44,8 @@
     (condp = (get w key)
           0 (red    "no")
           1 (green  "yes")
-          2 (yellow "with caution")))
+          2 (yellow "with caution")
+            (red    "error - word usage is not set!")))
 
 (defn print-field
     [title word key]
