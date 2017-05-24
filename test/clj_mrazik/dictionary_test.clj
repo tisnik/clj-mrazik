@@ -173,3 +173,15 @@
         (is (= java.lang.String (type (bold "string"))))
         (is (= (subs (bold "string") 1 7) "string"))))
 
+(deftest test-yes-no-with-caution
+    "Checks the function yes-no-with-caution"
+    (testing "the function yes-no-with-caution"
+        (is (= (yes-no-with-caution {:no 0 :yes 1 :with-caution 2} :no)           (red "no")))
+        (is (= (yes-no-with-caution {:no 0 :yes 1 :with-caution 2} :yes)          (green "yes")))
+        (is (= (yes-no-with-caution {:no 0 :yes 1 :with-caution 2} :with-caution) (yellow "with caution")))))
+
+(deftest test-print-field
+    "Checks the function print-field"
+    (testing "the function print-field"
+        (is (= (str (bold "title: ") " test ")) (print-field "title" {:term "term"} :term))))
+
