@@ -166,3 +166,13 @@
     (testing "if the clj-mrazik.irc-bot/start-irc-bot definition exists."
         (is (callable? 'clj-mrazik.irc-bot/start-irc-bot))))
 
+(deftest test-message-to-channel?
+    "Check the behaviour of function clj-mrazik.irc-bot/message-to-channel?"
+    (testing "the function message-to-channel?"
+        (is (message-to-channel? {:target "#"}))
+        (is (message-to-channel? {:target "#channel"}))
+        (is (message-to-channel? {:target "#channel message"}))
+        (is (not (message-to-channel? {:target ""})))
+        (is (not (message-to-channel? {:target "channel"})))
+        (is (not (message-to-channel? {:target "channel message"})))))
+
