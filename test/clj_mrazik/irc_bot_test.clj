@@ -176,3 +176,32 @@
         (is (not (message-to-channel? {:target "channel"})))
         (is (not (message-to-channel? {:target "channel message"})))))
 
+(deftest test-message-for-me?-1
+    "Check the behaviour of function clj-mrazik.irc-bot/message-for-me?"
+    (testing "the function message-for-me?"
+        (are [name special-prefix message] (message-for-me? name special-prefix {:target message})
+            "bot" "?" "bot:"
+            "bot" "?" "bot: message")))
+
+(deftest test-message-for-me?-2
+    "Check the behaviour of function clj-mrazik.irc-bot/message-for-me?"
+    (testing "the function message-for-me?"
+        (are [name special-prefix message] (message-for-me? name special-prefix {:text message :target "channel"})
+            "bot" "?" "bot:"
+            "bot" "?" "bot: message"
+            "bot" "?" "bot,"
+            "bot" "?" "bot, message")))
+
+(deftest test-message-for-me?-3
+    "Check the behaviour of function clj-mrazik.irc-bot/message-for-me?"
+    (testing "the function message-for-me?"
+        (are [name special-prefix message] (message-for-me? name special-prefix {:text message :target "channel"})
+            "bot" "?" "? message"
+            "bot" "?" "?: message")))
+
+(deftest test-message-for-me?-4
+    "Check the behaviour of function clj-mrazik.irc-bot/message-for-me?"
+    (testing "the function message-for-me?"
+        (is (not (message-for-me? "bot" "?" {:text "?" :target ""})))
+        (is (not (message-for-me? "bot" "?" {:text "" :target ""})))))
+
