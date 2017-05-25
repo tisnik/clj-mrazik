@@ -166,6 +166,10 @@
     (testing "if the clj-mrazik.irc-bot/start-irc-bot definition exists."
         (is (callable? 'clj-mrazik.irc-bot/start-irc-bot))))
 
+;
+; Tests for various functions
+;
+
 (deftest test-message-to-channel?
     "Check the behaviour of function clj-mrazik.irc-bot/message-to-channel?"
     (testing "the function message-to-channel?"

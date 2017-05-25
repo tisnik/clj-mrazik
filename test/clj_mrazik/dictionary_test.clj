@@ -23,6 +23,9 @@
     [function-name]
     (clojure.test/function? function-name))
 
+;
+; Tests for various functions
+;
 
 (deftest test-highlight-existence
     "Check that the clj-mrazik.dictionary/highlight definition exists."
@@ -112,6 +115,12 @@
     "Check that the clj-mrazik.dictionary/find-word definition exists."
     (testing "if the clj-mrazik.dictionary/find-word definition exists."
         (is (callable? 'clj-mrazik.dictionary/find-word))))
+
+
+(deftest test-term-count-existence
+    "Check that the clj-mrazik.dictionary/term-count definition exists."
+    (testing "if the clj-mrazik.dictionary/term-count definition exists."
+        (is (callable? 'clj-mrazik.dictionary/term-count))))
 
 
 (deftest test-word-exist?-existence
