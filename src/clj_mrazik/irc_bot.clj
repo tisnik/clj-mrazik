@@ -132,19 +132,19 @@
     [input]
     (dictionary/find-word input))
 
-(defn use-wildchards?
+(defn use-wildchars?
     [input]
     (or (.startsWith input "*")
         (.endsWith input "*")))
 
 (defn one-word-like-this?
     [input]
-    (if (use-wildchards? input)
+    (if (use-wildchars? input)
         (= (dictionary/words-like-this input) 1)))
 
 (defn more-words-like-this?
     [input]
-    (if (use-wildchards? input)
+    (if (use-wildchars? input)
         (> (dictionary/words-like-this input) 1)))
 
 (defn return-word-like-this
