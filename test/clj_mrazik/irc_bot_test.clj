@@ -1,5 +1,5 @@
 ;
-;  (C) Copyright 2016  Pavel Tisnovsky
+;  (C) Copyright 2017  Pavel Tisnovsky
 ;
 ;  All rights reserved. This program and the accompanying materials
 ;  are made available under the terms of the Eclipse Public License v1.0
@@ -11,8 +11,10 @@
 ;
 
 (ns clj-mrazik.irc-bot-test
-  (:require [clojure.test :refer :all]
-            [clj-mrazik.irc-bot :refer :all]))
+  (:require [clojure.test          :refer :all]
+            [clj-mrazik.irc-bot    :refer :all]
+            [clj-mrazik.dyncfg     :as dyncfg]
+            [clj-mrazik.dictionary :as dictionary]))
 
 ;
 ; Common functions used by tests.
@@ -22,6 +24,10 @@
     "Test if given function-name is bound to the real function."
     [function-name]
     (clojure.test/function? function-name))
+
+;
+; Tests for various functions
+;
 
 (deftest test-load-data-file-existence
     "Check that the clj-mrazik.irc-bot/load-data-file definition exists."
@@ -227,4 +233,12 @@
             true "*word*"
             true "*"
             false "word")))
+
+(deftest test-is-word-from-dictionary?
+    "Check the behaviour of function clj-dopey.irc-bot/is-word-from-dictionary?"
+    (testing "the function is-word-from-dictionary?"
+        (with-redefs [dictionary/word-exist? (fn [input] false)]
+            (is (not (is-word-from-dictionary? "word"))))
+        (with-redefs [dictionary/word-exist? (fn [input] true)]
+            (is (is-word-from-dictionary? "word")))))
 

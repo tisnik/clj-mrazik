@@ -23,6 +23,10 @@
     [function-name]
     (clojure.test/function? function-name))
 
+;
+; Tests for various functions
+;
+
 (deftest test-read-csv-existence
     "Check that the clj-mrazik.importer/read-csv definition exists."
     (testing "if the clj-mrazik.importer/read-csv definition exists."
