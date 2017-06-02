@@ -11,8 +11,9 @@
 ;
 
 (ns clj-mrazik.importer-test
-  (:require [clojure.test :refer :all]
-            [clj-mrazik.importer :refer :all]))
+  (:require [clojure.test            :refer :all]
+            [clj-mrazik.importer     :refer :all]
+            [clj-mrazik.db-interface :as db-interface]))
 
 ;
 ; Common functions used by tests.
@@ -86,3 +87,10 @@
         (is (seq? (read-csv "test/test.csv")))
         (is (= 4 (count (read-csv "test/test.csv"))))))
 
+(deftest test-import-data-return-value
+    "Check the function import-data"
+    (testing "import-data"
+        (with-redefs [get-word-class (fn [input] "adverb")
+                      get-source     (fn [input] "source")
+                      db-interface/insert-word-into-dictionary (fn [term description word-class use-it incorrect-forms correct-forms see-also internal verified copyrighted source] term)]
+            (is (nil? (import-data "test/test.csv"))))))
