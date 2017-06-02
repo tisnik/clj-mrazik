@@ -1,0 +1,4 @@
+"ID","Term","Description","Class","Use","Incorrect forms","Correct forms","See also","Internal","Verified","Copyrighted","Source"
+"_amd64_noun","AMD64","The AMD implementation of the x86 architecture.","noun","yes","Hammer, x86_64, x86-64, x64, 64-bit x86","","","no","yes","no","Glossary"
+"_new__amd64_noun","x86_64","[EDIT ME] The AMD implementation of the x86 architecture.","noun","no","Hammer, x86_64, x86-64, x64, 64-bit x86","","","no","no","no","Glossary"
+"_new__yaml_noun","yaml","[EDIT ME] YAML is a human-readable data serialization standard for all programming languages. It is a recursive acronym for ""YAML Ain’t Markup Language,"" after originally being said to mean ""Yet Another Markup Language.""","noun","no","yaml","","","no","no","no","Glossary"
