@@ -80,3 +80,9 @@
         (is (= 0 (parse-use-it "No")))
         (is (= 2 (parse-use-it "with caution")))))
 
+(deftest test-read-csv
+    "Check the function read-cvs"
+    (testing "read-csv"
+        (is (seq? (read-csv "test/test.csv")))
+        (is (= 4 (count (read-csv "test/test.csv"))))))
+
