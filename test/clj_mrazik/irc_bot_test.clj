@@ -311,3 +311,9 @@
             (is (not (more-words-like-this? ""))) ; no wildchars
 )))
 
+(deftest test-dictionary-status
+    "Check the behaviour of function clj-dopey.irc-bot/dictionary-status"
+    (testing "the function dictionary-status"
+        (with-redefs [dictionary/term-count (fn [] 42)]
+            (is (= (dictionary-status) "Number of terms in dictionary: 42")))))
+
