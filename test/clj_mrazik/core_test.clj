@@ -11,8 +11,9 @@
 ;
 
 (ns clj-mrazik.core-test
-  (:require [clojure.test :refer :all]
-            [clj-mrazik.core :refer :all]))
+  (:require [clojure.test        :refer :all]
+            [clj-mrazik.core     :refer :all]
+            [clj-mrazik.importer :refer :all]))
 
 ;
 ; Common functions used by tests.
@@ -90,9 +91,32 @@
         (is (callable? 'clj-mrazik.core/show-help))))
 
 
+(deftest test-run-app-existence
+    "Check that the clj-mrazik.core/run-app definition exists."
+    (testing "if the clj-mrazik.core/run-app definition exists."
+        (is (callable? 'clj-mrazik.core/run-app))))
+
 (deftest test--main-existence
     "Check that the clj-mrazik.core/-main definition exists."
     (testing "if the clj-mrazik.core/-main definition exists."
         (is (callable? 'clj-mrazik.core/-main))))
 
+
+(deftest test-show-help
+    "Check the function show-help"
+    (testing "the function show-help"
+       ; use mock instead of println function
+        (with-redefs [println (fn [string] string)]
+            (is (= "help"         (show-help "help")))
+            (is (= "line1\nline2" (show-help "line1\nline2"))))))
+
+(deftest test-run-app
+    "Check the function run-app"
+    (testing "the function run-app"
+        (with-redefs [show-help   (fn [summary] :help)
+                      import-data (fn [import?] :import)
+                      start-bot   (fn [] :start-bot)]
+            (is (= :help      (run-app "summary" true false)))
+            (is (= :import    (run-app "summary" false true)))
+            (is (= :start-bot (run-app "summary" false false))))))
 
