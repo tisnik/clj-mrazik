@@ -1,5 +1,5 @@
 ;
-;  (C) Copyright 2016  Pavel Tisnovsky
+;  (C) Copyright 2016, 2017  Pavel Tisnovsky
 ;
 ;  All rights reserved. This program and the accompanying materials
 ;  are made available under the terms of the Eclipse Public License v1.0
@@ -13,18 +13,19 @@
 (ns clj-mrazik.core
   (:gen-class))
 
-(require '[clojure.pprint :as pprint])
+(require '[clojure.pprint        :as pprint])
 (require '[clj-calendar.calendar :as calendar])
 
-(require '[irclj.core :as irc])
+(require '[irclj.core            :as irc])
 
-(require '[clojure.tools.cli   :as cli])
+(require '[clojure.tools.cli     :as cli])
+(require '[clojure.tools.logging :as log])
 
-(require '[clj-mrazik.config   :as config])
-(require '[clj-mrazik.schedule :as schedule])
-(require '[clj-mrazik.irc-bot  :as irc-bot])
-(require '[clj-mrazik.dyncfg   :as dyncfg])
-(require '[clj-mrazik.importer :as importer])
+(require '[clj-mrazik.config     :as config])
+(require '[clj-mrazik.schedule   :as schedule])
+(require '[clj-mrazik.irc-bot    :as irc-bot])
+(require '[clj-mrazik.dyncfg     :as dyncfg])
+(require '[clj-mrazik.importer   :as importer])
 
 (def cli-options
     "Definitions of all command line options that are  currenty supported."
@@ -130,14 +131,21 @@
     (println "Usage:")
     (println summary))
 
+(defn run-app
+    [summary show-help? import?]
+    (cond show-help? (show-help summary)
+          import?    (importer/import-data import?)
+          :else      (start-bot)))
+
 (defn -main
     "Entry point to this bot."
     [& args]
+    (log/info "Starting the application")
     (let [all-options (cli/parse-opts args cli-options)
           options     (all-options :options)
           show-help?  (options :help)
-          import?     (options :import)]
-          (cond show-help? (show-help (:summary all-options))
-                import?    (importer/import-data import?)
-                :else      (start-bot))))
+          import?     (options :import)
+          summary     (:summary all-options)]
+          (run-app summary show-help? import?))
+    (log/info "Exiting from the main function"))
 
