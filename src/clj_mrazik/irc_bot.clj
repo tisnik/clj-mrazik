@@ -161,6 +161,23 @@
     []
     (str "Number of terms in dictionary: " (dictionary/term-count)))
 
+(defn congrats?
+    [input]
+    (re-matches #"congrats [a-zA-Z0-9]+" input))
+
+(defn congratulate-to
+    [name]
+    (let [messages ["%s, you continue to be amazing and inspiring. Congratulations!"
+                    "Woohoo !! Way to go %s! Congratulations"
+                    "That is an awesome accomplishment %s"]
+          message (rand-nth messages)]
+    (format message name)))
+
+(defn congratulate
+    [input]
+    (let [name (second (re-matches #"congrats ([a-zA-Z0-9]+)" input))]
+        (congratulate-to name)))
+
 (defn prepare-reply-text
     [incomming-message nick input-text]
     (try
@@ -196,6 +213,7 @@
                               (and number-cruncher? (is-two-numbers? input))          (print-gcd input)
                               (and number-cruncher? (is-factorial? input))            (print-factorial input)
                               (and s-expressions?   (is-s-expression? input))         (s-expression input)
+                              (congrats? input)                                       (congratulate input)
                               (is-word-from-dictionary? input) (return-words-from-dictionary input)
                               (one-word-like-this? input)      (return-word-like-this input)
                               (more-words-like-this? input)    (return-more-words-like-this input)
