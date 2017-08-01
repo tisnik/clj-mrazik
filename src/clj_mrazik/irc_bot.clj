@@ -169,7 +169,11 @@
     [name]
     (let [messages ["%s, you continue to be amazing and inspiring. Congratulations!"
                     "Woohoo !! Way to go %s! Congratulations"
-                    "That is an awesome accomplishment %s"]
+                    "That is an awesome accomplishment %s"
+		    "Congratulations to our awesome %s!"
+		    "Congratulations %s and thank you for your focus and dedication!"
+		    "I've worked directly with %s and I admire %s's abilities and fortitude. We are lucky to have %s."
+		    "Congratulations to %s on your promotions! Thanks for your hard work and the effort you put into creating customer-focused content and contributing to our quality, relevancy and efficiency goals. We are all looking forward to your continued positive contributions!"]
           message (rand-nth messages)]
     (format message name)))
 
