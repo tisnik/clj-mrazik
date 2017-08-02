@@ -181,7 +181,7 @@
                     "%s, congrats on your new achievement! Your achievement is indeed a great addition to your personality."
                     "Many dream, few dare and very few actually succeed. Long live %s."
                     "%s, you have proved once again that hard work pays off! I am so happy for you."
-                    "Keep going, %s, and may your achievement bring even more hapinness into your life and family."]
+                    "Keep going, %s, and may your achievement bring even more happiness into your life and family."]
           message (rand-nth messages)]
     (format message name)))
 
