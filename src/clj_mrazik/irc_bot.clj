@@ -182,7 +182,14 @@
                     "Many dream, few dare and very few actually succeed. Long live %s."
                     "%s, you have proved once again that hard work pays off! I am so happy for you."
                     "%s, I salute your courage, your strength, your indefatigability, and I want you to know that we are with you."
-                    "Keep going, %s, and may your achievement bring even more happiness into your life and family."]
+                    "Keep going, %s, and may your achievement bring even more happiness into your life and family."
+                    "Your work and dedication is inspirational, %s."
+                    "%s, you have been instrumental in Red Hat's success with your exceptional attention to detail."
+                    "You always have the customer's best interest at heart, %s."
+                    "You truly are leading the Red Hat Way, %s."
+                    "It's been a privilege to see you going the Red Hat way, %s."
+                    "The world would be a lot worse, if your expertise and knowledge weren't leading us to the stars."
+                    "Keep going, %s, and may your achievement bring even more hapinness into your life and family."]
           message (rand-nth messages)]
     (format message name)))
 
