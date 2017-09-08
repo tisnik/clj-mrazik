@@ -189,6 +189,7 @@
                     "You truly are leading the Red Hat Way, %s."
                     "It's been a privilege to see you going the Red Hat way, %s."
                     "The world would be a lot worse, if your expertise and knowledge weren't leading us to the stars."
+                    "Congratulations %1$, this is well deserved. I can personally attest to %1$'s dedication, competency and spirit of collaboration. Congratulations my friend and I am excited for your future!"
                     "Keep going, %s, and may your achievement bring even more hapinness into your life and family."]
           message (rand-nth messages)]
     (format message name)))
