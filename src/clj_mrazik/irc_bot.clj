@@ -128,7 +128,11 @@
 
 (defn is-word-from-dictionary?
     [input]
-    (dictionary/word-exist? input))
+    (try
+        (dictionary/word-exist? input)
+        (catch java.sql.SQLException e
+            (log/error e "is-word-from-dictionary?")
+            false)))
 
 (defn return-words-from-dictionary
     [input]
@@ -159,7 +163,11 @@
 
 (defn dictionary-status
     []
-    (str "Number of terms in dictionary: " (dictionary/term-count)))
+    (try
+        (str "Number of terms in dictionary: " (dictionary/term-count))
+        (catch java.sql.SQLException e
+            (log/error e "dictionary-status")
+            "Can not access database")))
 
 (defn congrats?
     [input]
