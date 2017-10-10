@@ -73,6 +73,17 @@
         (update-in [:modules :s-expressions]   parse-boolean)
         (update-in [:modules :number-cruncher] parse-boolean)))
 
+(defn keywords->strings-in-dict
+    [dict]
+    (into {}
+        (for [[k v] dict]
+             [(.toLowerCase (name k)) (str v)])))
+
+(defn update-known-responses
+    [configuration]
+    (assoc configuration :responses
+        (keywords->strings-in-dict (configuration :responses))))
+
 (defn load-configuration
     "Load configuration from the provided INI file."
     [ini-file-name]
@@ -80,7 +91,8 @@
         update-server-configuration
         update-bot-configuration
         update-geolocation-configuration
-        update-modules-configuration))
+        update-modules-configuration
+        update-known-responses))
 
 (defn print-configuration
     "Print actual configuration to the output."
