@@ -126,6 +126,19 @@
     [input]
     (re-matches #"[0-9]+!" input))
 
+(defn find-word-in-known-responses
+    [input]
+    (let [responses (-> @dyncfg/configuration :responses)]
+        (responses (.toLowerCase input))))
+
+(defn is-word-from-known-responses?
+    [input]
+    (find-word-in-known-responses input))
+
+(defn return-known-response
+    [input]
+    (find-word-in-known-responses input))
+
 (defn is-word-from-dictionary?
     [input]
     (try
@@ -232,9 +245,6 @@
                           "time"     (calendar/format-time (calendar/get-calendar))
                           "sunrise"  (schedule/get-sunrise (:geolocation @dyncfg/configuration))
                           "sunset"   (schedule/get-sunset  (:geolocation @dyncfg/configuration))
-                          "die"      "thanks for your feedback, I appreciate it"
-                          "Good bot" "I know"
-                          "Good bot." "I know"
                           "rainbow"   (apply str (for [color (range 16)]
                                                      (str (char 3) (format "%02d" color) (format "test%02d " color) (char 3) "99")))
                           (cond
@@ -243,6 +253,7 @@
                               (and number-cruncher? (is-factorial? input))            (print-factorial input)
                               (and s-expressions?   (is-s-expression? input))         (s-expression input)
                               (congrats? input)                                       (congratulate input)
+                              (is-word-from-known-responses? input) (return-known-response input)
                               (is-word-from-dictionary? input) (return-words-from-dictionary input)
                               (one-word-like-this? input)      (return-word-like-this input)
                               (more-words-like-this? input)    (return-more-words-like-this input)
