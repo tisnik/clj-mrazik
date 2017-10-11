@@ -29,12 +29,25 @@
 
 (defn load-vocabulary
     [filename]
-    (into [] (load-data-file filename)))
+    (let [output (into [] (load-data-file filename))]
+        (println "Read" (count output) "lines from" filename)
+        output))
 
-(def verbs      (load-vocabulary "data/verbs.txt"))
-(def adverbs    (load-vocabulary "data/adverbs.txt"))
-(def adjectives (load-vocabulary "data/adjectives.txt"))
-(def nouns      (load-vocabulary "data/nouns.txt"))
+(def verbs            (atom nil))
+(def adverbs          (atom nil))
+(def adjectives       (atom nil))
+(def nouns            (atom nil))
+(def congrat-messages (atom nil))
+
+(defn load-all-data-files
+    []
+    (reset! verbs      (load-vocabulary "data/verbs.txt"))
+    (reset! adverbs    (load-vocabulary "data/adverbs.txt"))
+    (reset! adjectives (load-vocabulary "data/adjectives.txt"))
+    (reset! nouns      (load-vocabulary "data/nouns.txt"))
+    (reset! congrat-messages (load-vocabulary "data/congratulations.txt")))
+
+(load-all-data-files)
 
 (defn message-to-channel?
     [message]
@@ -63,10 +76,10 @@
 
 (defn random-message
     []
-    (str (rand-nth adverbs)
-     " " (rand-nth verbs)
-     " " (rand-nth adjectives)
-     " " (rand-nth nouns)))
+    (str (rand-nth @adverbs)
+     " " (rand-nth @verbs)
+     " " (rand-nth @adjectives)
+     " " (rand-nth @nouns)))
 
 (defn primefactors 
     ([n] 
@@ -188,32 +201,8 @@
 
 (defn congratulate-to
     [name]
-    (let [messages ["%s, you continue to be amazing and inspiring. Congratulations!"
-                    "Woohoo !! Way to go, %s! Congratulations"
-                    "That is an awesome accomplishment, %s."
-                    "Congratulations to our awesome %s!"
-                    "Congratulations %s and thank you for your focus and dedication!"
-                    "I've worked directly with %s and I admire %s's abilities and fortitude. We are lucky to have %s."
-                    "Congratulations to %s on your promotions! Thanks for your hard work and the effort you put into creating customer-focused content and contributing to our quality, relevancy and efficiency goals. We are all looking forward to your continued positive contributions!"
-                    "You’ve always been the one who had lots of determination and focus, %s."
-                    "%s, congratulations on this big step you’ve taken in increasing the Red Hat value!"
-                    "%s, your dedication to the company is admirable."
-                    "You have proved to own your career, %s."
-                    "%s, congrats on your new achievement! Your achievement is indeed a great addition to your personality."
-                    "Many dream, few dare and very few actually succeed. Long live %s."
-                    "%s, you have proved once again that hard work pays off! I am so happy for you."
-                    "%s, I salute your courage, your strength, your indefatigability, and I want you to know that we are with you."
-                    "Keep going, %s, and may your achievement bring even more happiness into your life and family."
-                    "Your work and dedication is inspirational, %s."
-                    "%s, you have been instrumental in Red Hat's success with your exceptional attention to detail."
-                    "You always have the customer's best interest at heart, %s."
-                    "You truly are leading the Red Hat Way, %s."
-                    "It's been a privilege to see you going the Red Hat way, %s."
-                    "The world would be a lot worse, if your expertise and knowledge weren't leading us to the stars."
-                    "Congratulations %1$, this is well deserved. I can personally attest to %1$'s dedication, competency and spirit of collaboration. Congratulations my friend and I am excited for your future!"
-                    "Keep going, %s, and may your achievement bring even more hapinness into your life and family."]
-          message (rand-nth messages)]
-    (format message name)))
+    (let [message (rand-nth @congrat-messages)]
+       (format message name)))
 
 (defn congratulate
     [input]
