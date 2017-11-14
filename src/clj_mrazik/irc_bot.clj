@@ -33,19 +33,25 @@
         (println "Read" (count output) "lines from" filename)
         output))
 
-(def verbs            (atom nil))
-(def adverbs          (atom nil))
-(def adjectives       (atom nil))
-(def nouns            (atom nil))
-(def congrat-messages (atom nil))
+(def verbs                   (atom nil))
+(def adverbs                 (atom nil))
+(def adjectives              (atom nil))
+(def nouns                   (atom nil))
+(def congrat-messages        (atom nil))
+(def happy-birthday-messages (atom nil))
+(def quotes                  (atom nil))
+(def papalas                 (atom nil))
 
 (defn load-all-data-files
     []
-    (reset! verbs      (load-vocabulary "data/verbs.txt"))
-    (reset! adverbs    (load-vocabulary "data/adverbs.txt"))
-    (reset! adjectives (load-vocabulary "data/adjectives.txt"))
-    (reset! nouns      (load-vocabulary "data/nouns.txt"))
-    (reset! congrat-messages (load-vocabulary "data/congratulations.txt")))
+    (reset! verbs                   (load-vocabulary "data/verbs.txt"))
+    (reset! adverbs                 (load-vocabulary "data/adverbs.txt"))
+    (reset! adjectives              (load-vocabulary "data/adjectives.txt"))
+    (reset! nouns                   (load-vocabulary "data/nouns.txt"))
+    (reset! congrat-messages        (load-vocabulary "data/congratulations.txt"))
+    (reset! happy-birthday-messages (load-vocabulary "data/happy-birthday.txt"))
+    (reset! quotes                  (load-vocabulary "data/quotes.txt"))
+    (reset! papalas                 (load-vocabulary "data/papalas.txt")))
 
 (load-all-data-files)
 
