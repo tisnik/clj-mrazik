@@ -87,6 +87,10 @@
      " " (rand-nth @adjectives)
      " " (rand-nth @nouns)))
 
+(defn say-quote
+    [quotes]
+    (rand-nth @quotes))
+
 (defn primefactors 
     ([n] 
         (primefactors n 2 '()))
@@ -201,19 +205,37 @@
             (log/error e "dictionary-status")
             "Can not access database")))
 
+(defn get-nick
+    [prefix input]
+    (-> input (subs (count prefix)) clojure.string/trim))
+
 (defn congrats?
     [input]
     (re-matches #"congrats [a-zA-Z0-9]+" input))
 
 (defn congratulate-to
-    [name]
+    [nick]
     (let [message (rand-nth @congrat-messages)]
-       (format message name)))
+       (format message nick)))
 
 (defn congratulate
     [input]
-    (let [name (second (re-matches #"congrats ([a-zA-Z0-9]+)" input))]
-        (congratulate-to name)))
+    (let [nick (get-nick "congrats" input)]
+        (congratulate-to nick)))
+
+(defn happy-birthday-to
+    [nick]
+    (let [message (rand-nth @happy-birthday-messages)]
+       (format message nick)))
+
+(defn happy-birthday
+    [input]
+    (let [nick (get-nick "happy birthday" input)]
+        (happy-birthday-to nick)))
+
+(defn happy-birthday?
+    [input]
+    (re-matches #"happy birthday [a-zA-Z0-9]+" input))
 
 (defn prepare-reply-text
     [incomming-message nick input-text]
@@ -240,6 +262,14 @@
                           "time"     (calendar/format-time (calendar/get-calendar))
                           "sunrise"  (schedule/get-sunrise (:geolocation @dyncfg/configuration))
                           "sunset"   (schedule/get-sunset  (:geolocation @dyncfg/configuration))
+                          "die"      "thanks for your feedback, I appreciate it"
+                          "Good bot" "I know"
+                          "Good bot." "I know"
+                          "quote"    (say-quote quotes)
+                          "hlaska"   (say-quote quotes)
+                          "papalas"  (say-quote papalas)
+                          "papaláš"  (say-quote papalas)
+                          "fix the Universe" "linux++ trello-- Mojo-- Blue.Jeans-- BlueJeans-- asciidoc-- docbook++"
                           "rainbow"   (apply str (for [color (range 16)]
                                                      (str (char 3) (format "%02d" color) (format "test%02d " color) (char 3) "99")))
                           (cond
@@ -248,6 +278,7 @@
                               (and number-cruncher? (is-factorial? input))            (print-factorial input)
                               (and s-expressions?   (is-s-expression? input))         (s-expression input)
                               (congrats? input)                                       (congratulate input)
+                              (happy-birthday? input)                                 (happy-birthday input)
                               (is-word-from-known-responses? input) (return-known-response input)
                               (is-word-from-dictionary? input) (return-words-from-dictionary input)
                               (one-word-like-this? input)      (return-word-like-this input)
