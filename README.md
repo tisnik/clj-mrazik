@@ -42,6 +42,9 @@ FIXME: listing of options this app accepts.
 ### That You Think
 ### Might be Useful
 
+### Useful links
+https://www.fce.vutbr.cz/aiu/vojkuvka.m/6u4/cviceni06.htm
+
 ## License
 
 Copyright © 2016 FIXME
