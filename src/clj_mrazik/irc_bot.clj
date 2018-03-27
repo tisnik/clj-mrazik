@@ -45,6 +45,11 @@
 (def soviet2                 (atom nil))
 (def soviet3                 (atom nil))
 (def soviet4                 (atom nil))
+(def czech1                  (atom nil))
+(def czech2                  (atom nil))
+(def czech3                  (atom nil))
+(def czech4                  (atom nil))
+
 
 (defn load-all-data-files
     []
@@ -56,6 +61,10 @@
     (reset! happy-birthday-messages (load-vocabulary "data/happy-birthday.txt"))
     (reset! quotes                  (load-vocabulary "data/quotes.txt"))
     (reset! papalas                 (load-vocabulary "data/papalas.txt"))
+    (reset! czech1                  (load-vocabulary "data/czech1.txt"))
+    (reset! czech2                  (load-vocabulary "data/czech2.txt"))
+    (reset! czech3                  (load-vocabulary "data/czech3.txt"))
+    (reset! czech4                  (load-vocabulary "data/czech4.txt"))
     (reset! soviet1                 (load-vocabulary "data/soviet1.txt"))
     (reset! soviet2                 (load-vocabulary "data/soviet2.txt"))
     (reset! soviet3                 (load-vocabulary "data/soviet3.txt"))
@@ -279,6 +288,7 @@
                           "papalas"  (say-quote papalas)
                           "papaláš"  (say-quote papalas)
                           "совет"    (say-quote soviet1 soviet2 soviet3 soviet4)
+                          "sg"       (say-quote czech1 czech2 czech3 czech4)
                           "fix the Universe" "linux++ trello-- Mojo-- Blue.Jeans-- BlueJeans-- asciidoc-- docbook++"
                           "rainbow"   (apply str (for [color (range 16)]
                                                      (str (char 3) (format "%02d" color) (format "test%02d " color) (char 3) "99")))
