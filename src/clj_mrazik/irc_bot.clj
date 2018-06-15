@@ -283,6 +283,7 @@
                           "die"      "thanks for your feedback, I appreciate it"
                           "Good bot" "I know"
                           "Good bot." "I know"
+                          "ms"       "The current Microsoft is *NOTHING* like the old Microsoft. They have excellent people who really get Open Source. There's no reason to stop using github except outdated and outmoded feelings from yesteryear. The Microsoft of 2018 are our friends. They're not the Borg. They're not out to Embrace, Extend, Extinguish all we hold dear."
                           "quote"    (say-quote quotes)
                           "hlaska"   (say-quote quotes)
                           "papalas"  (say-quote papalas)
