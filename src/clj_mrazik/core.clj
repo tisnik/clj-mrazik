@@ -16,8 +16,6 @@
 (require '[clojure.pprint        :as pprint])
 (require '[clj-calendar.calendar :as calendar])
 
-(require '[irclj.core            :as irc])
-
 (require '[clojure.tools.cli     :as cli])
 (require '[clojure.tools.logging :as log])
 
