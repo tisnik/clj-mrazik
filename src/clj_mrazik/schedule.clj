@@ -12,7 +12,6 @@
 
 (ns clj-mrazik.schedule)
 
-(require '[clojure.pprint :as pprint])
 (require '[clj-calendar.calendar :as calendar])
 (require '[sunrise.core :as sunrise])
 
