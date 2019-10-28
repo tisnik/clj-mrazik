@@ -262,7 +262,6 @@
           modules     (-> @dyncfg/configuration :modules)
           number-cruncher? (:number-cruncher modules)
           s-expressions?   (:s-expressions modules)
-          dictionary?      (:dictionary modules)
           random-messages? (:random-messages modules)
           input       (if in-channel?
                           (if (.startsWith input-text (-> @dyncfg/configuration :bot :prefix))
