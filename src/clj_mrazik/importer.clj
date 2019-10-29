@@ -54,7 +54,6 @@
 (defn import-data
     [file-name]
     (let [parsed-csv (read-csv file-name)
-          descriptions (first parsed-csv)
           entries      (rest  parsed-csv)]
          (doseq [entry entries]
              (let [word-class (get-word-class (nth entry 3))
